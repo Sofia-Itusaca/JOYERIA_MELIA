@@ -1,0 +1,38 @@
+import { Home, Grid, Search, User, ShoppingCart } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+
+export default function BottomNav() {
+const location = useLocation();
+
+const navItems = [
+    { name: "Inicio", icon: Home, path: "/" },
+    { name: "Categorías", icon: Grid, path: "/catalogo" },
+    { name: "Buscar", icon: Search, path: "/catalogo" },
+    { name: "Perfil", icon: User, path: "/perfil" },
+    { name: "Carrito", icon: ShoppingCart, path: "/checkout" },
+];
+
+return (
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-md md:hidden z-50">
+    <div className="flex justify-around py-2">
+        {navItems.map((item) => {
+        const Icon = item.icon;
+        const active = location.pathname === item.path;
+
+        return (
+            <Link
+            key={item.name}
+            to={item.path}
+            className={`flex flex-col items-center text-xs ${
+                active ? "text-blue-600" : "text-gray-500"
+            }`}
+            >
+            <Icon size={20} />
+            {item.name}
+            </Link>
+        );
+        })}
+    </div>
+    </div>
+);
+}
