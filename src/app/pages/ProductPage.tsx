@@ -45,11 +45,11 @@ export function ProductPage() {
 
   return (
     <div className="min-h-screen bg-[#f5f5f7]">
-      <div className="max-w-[1400px] mx-auto px-4 py-8">
+      <div className="max-w-[1400px] mx-auto px-4 py-2">
         <Button
           variant="ghost"
           onClick={() => navigate('/catalogo')}
-          className="mb-6"
+          className="mb-2s"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Volver al catálogo
@@ -58,7 +58,7 @@ export function ProductPage() {
         <div className="grid lg:grid-cols-2 gap-4 bg-white rounded-lg p-4 shadow-sm">
           {/* Images */}
           <div className="space-y-4">
-            <div className="aspect-[4/5] md:aspect-square overflow-hidden rounded-lg bg-[#f5f5f7]">
+            <div className="aspect-[4/5] max-h-[420px] overflow-hidden rounded-lg bg-[#f5f5f7]">
               <img
                 src={images[currentImageIndex]}
                 alt={product.name}
@@ -90,7 +90,7 @@ export function ProductPage() {
           </div>
 
           {/* Product Info */}
-          <div className="space-y-6">
+          <div className="space-y-4">
             <div>
               <Badge className="mb-3 bg-[#5b4c9f]/10 text-[#5b4c9f] hover:bg-[#5b4c9f]/20">
                 {product.category.replace('-', ' ').toUpperCase()}
