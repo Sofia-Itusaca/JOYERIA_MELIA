@@ -1,8 +1,12 @@
 import { Home, Grid, Search, User, ShoppingCart } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useApp } from "../context/AppContext";
 
 export default function BottomNav() {
 const location = useLocation();
+const { cart } = useApp();
+
+const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
 const navItems = [
     { name: "Inicio", icon: Home, path: "/" },
@@ -25,8 +29,20 @@ return (
                 active ? "text-blue-600" : "text-gray-500"
             }`}
             >
-            <Icon size={20} />
-            {item.name}
+            {item.name === "Carrito" ? (
+                <div className="relative">
+                    <Icon size={20} />
+
+                    {cartCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-[#5b4c9f] text-white text-[10px] rounded-full px-1.5 py-0.5">
+                        {cartCount}
+                    </span>
+                    )}
+                </div>
+                ) : (
+                <Icon size={20} />
+                )}
+                {item.name}
             </Link>
         );
         })}
