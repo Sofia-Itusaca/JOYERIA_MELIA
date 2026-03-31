@@ -55,10 +55,10 @@ export function ProductPage() {
           Volver al catálogo
         </Button>
 
-        <div className="grid lg:grid-cols-2 gap-12 bg-white rounded-lg p-8 shadow-sm">
+        <div className="grid lg:grid-cols-2 gap-4 bg-white rounded-lg p-4 shadow-sm">
           {/* Images */}
           <div className="space-y-4">
-            <div className="aspect-square overflow-hidden rounded-lg bg-[#f5f5f7]">
+            <div className="aspect-[4/5] md:aspect-square overflow-hidden rounded-lg bg-[#f5f5f7]">
               <img
                 src={images[currentImageIndex]}
                 alt={product.name}

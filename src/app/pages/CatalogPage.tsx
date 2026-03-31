@@ -208,7 +208,7 @@ export function CatalogPage() {
                 </Button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {filteredProducts.map((product) => {
                   const mainImage = product.materials[0].images[0];
                   
