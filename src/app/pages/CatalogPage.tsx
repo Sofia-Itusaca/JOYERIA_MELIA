@@ -43,6 +43,8 @@ export function CatalogPage() {
   const [selectedGender, setSelectedGender] = useState(searchParams.get('gender') || 'all');
   const [selectedMaterial, setSelectedMaterial] = useState('all');
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+  const [showFilter, setShowFilter] = useState(false);
+  const [filterStep, setFilterStep] = useState(1);
 
   const filteredProducts = useMemo(() => {
     return mockProducts.filter(product => {
@@ -266,6 +268,112 @@ export function CatalogPage() {
           </div>
         </div>
       </div>
+          {/* Floating Filter Button */}
+      <div className="lg:hidden fixed bottom-20 left-1/2 -translate-x-1/2 z-50">
+              <Button
+        onClick={() => {
+          if (
+            selectedCategory !== "all" ||
+            selectedMaterial !== "all" ||
+            selectedGender !== "all"
+          ) {
+            setSelectedCategory("all");
+            setSelectedMaterial("all");
+            setSelectedGender("all");
+          } else {
+            setFilterStep(1);
+            setShowFilter(true);
+          }
+        }}
+        className="bg-[#5b4c9f] hover:bg-[#4a3d85] text-white px-6 py-2 rounded-full shadow-lg"
+      >
+        {selectedCategory !== "all" ||
+        selectedMaterial !== "all" ||
+        selectedGender !== "all"
+          ? "Limpiar filtro"
+          : "Filtrar"}
+      </Button>
+      </div>
+      {showFilter && (
+      <div className="fixed inset-0 z-50 flex items-end">
+        
+        {/* Background */}
+        <div 
+          className="absolute inset-0 bg-black/40"
+          onClick={() => setShowFilter(false)}
+        />
+
+        {/* Panel */}
+        <div className="relative bg-white w-full rounded-t-2xl p-6 max-h-[60vh] overflow-y-auto">
+          
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold">
+              Filtrar productos
+            </h2>
+
+            <button
+              onClick={() => setShowFilter(false)}
+              className="text-gray-500 text-xl"
+            >
+              ✕
+            </button>
+          </div>
+
+          {filterStep === 1 && (
+            <div className="space-y-2">
+              {categories.slice(1).map((category) => (
+                <button
+                  key={category.value}
+                  onClick={() => {
+                    setSelectedCategory(category.value);
+                    setFilterStep(2);
+                  }}
+                  className="w-full text-left p-3 rounded-lg hover:bg-gray-100"
+                >
+                  {category.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {filterStep === 2 && (
+            <div className="space-y-2">
+              {materialFilters.slice(1).map((material) => (
+                <button
+                  key={material.value}
+                  onClick={() => {
+                    setSelectedMaterial(material.value);
+                    setFilterStep(3);
+                  }}
+                  className="w-full text-left p-3 rounded-lg hover:bg-gray-100"
+                >
+                  {material.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {filterStep === 3 && (
+            <div className="space-y-2">
+              {genderFilters.map((gender) => (
+                <button
+                  key={gender.value}
+                  onClick={() => {
+                    setSelectedGender(gender.value);
+                    setShowFilter(false);
+                    setFilterStep(1);
+                  }}
+                  className="w-full text-left p-3 rounded-lg hover:bg-gray-100"
+                >
+                  {gender.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+        </div>
+      </div>
+    )}
     </div>
   );
 }
