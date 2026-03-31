@@ -37,7 +37,7 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f5f7] flex items-center justify-center px-4 py-6">
+    <div className="min-h-[calc(100vh-120px)] bg-[#f5f5f7] flex items-start justify-center px-4 pt-6 pb-16">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="text-center mb-8">

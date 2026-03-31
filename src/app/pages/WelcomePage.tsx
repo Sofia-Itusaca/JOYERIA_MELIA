@@ -8,7 +8,7 @@ export function WelcomePage() {
   const { storeInfo } = useApp();
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-[calc(100vh-70px)] bg-white">
       {/* Hero Section */}
       <section className="relative h-[80vh] min-h-[600px] overflow-hidden">
         <div 
