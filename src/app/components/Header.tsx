@@ -169,7 +169,7 @@ export function Header() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-border bg-white">
+          <div className="fixed top-14 left-0 w-full bg-white shadow-lg z-50 rounded-b-xl">
             <div className="px-4 py-3">
               <form onSubmit={handleSearch} className="relative mb-3">
                 <Input
@@ -187,18 +187,32 @@ export function Header() {
                 </button>
               </form>
 
-              <nav className="space-y-1">
-                {categories.map((category) => (
-                  <Link
-                    key={category.name}
-                    to={category.path}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-sm text-[#1a1f3a] hover:bg-[#f5f5f7] rounded-md transition-colors"
-                  >
-                    {category.name}
-                  </Link>
-                ))}
-              </nav>
+              <nav className="space-y-2">
+                <Link
+                  to="/catalogo?gender=ella"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block px-4 py-2 text-[#1a1f3a] hover:bg-[#f5f5f7] rounded-lg"
+                >
+                  Para ellas
+                </Link>
+
+                <Link
+                  to="/catalogo?gender=ellos"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block px-4 py-2 text-[#1a1f3a] hover:bg-[#f5f5f7] rounded-lg"
+                >
+                  Para ellos
+                </Link>
+
+                <Link
+                  to="/catalogo?gender=babys"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block px-4 py-2 text-[#1a1f3a] hover:bg-[#f5f5f7] rounded-lg"
+                >
+                  Babys
+                </Link>
+
+                </nav>
             </div>
           </div>
         )}

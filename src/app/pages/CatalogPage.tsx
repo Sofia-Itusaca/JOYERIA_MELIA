@@ -179,7 +179,12 @@ export function CatalogPage() {
                     key={category.value}
                     variant={selectedCategory === category.value ? "default" : "outline"}
                     onClick={() => setSelectedCategory(category.value)}
-                    className={`whitespace-nowrap ${selectedCategory === category.value ? 'bg-[#5b4c9f] hover:bg-[#4a3d85]' : ''}`}
+                    className={`whitespace-nowrap rounded-full px-4 py-1 text-sm border transition-all
+                      ${
+                      selectedCategory === category.value
+                      ? "bg-[#5b4c9f] text-white border-[#5b4c9f]"
+                      : "bg-white border-gray-300 hover:border-[#5b4c9f]"
+                      }`}
                     size="sm"
                   >
                     {category.label}
