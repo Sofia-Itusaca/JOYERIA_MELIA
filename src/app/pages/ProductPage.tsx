@@ -58,35 +58,21 @@ export function ProductPage() {
         <div className="grid lg:grid-cols-2 gap-4 bg-white rounded-lg p-4 shadow-sm">
           {/* Images */}
           <div className="space-y-4">
-            <div className="aspect-[4/5] max-h-[420px] overflow-hidden rounded-lg bg-[#f5f5f7]">
-              <img
-                src={images[currentImageIndex]}
-                alt={product.name}
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-              />
+            <div className="relative aspect-[4/5] max-h-[420px] overflow-hidden rounded-lg bg-[#f5f5f7]">
+  
+            {/* contador */}
+            <div className="absolute top-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded-full z-10">
+              {currentImageIndex + 1}/{images.length}
             </div>
+            <img
+              src={images[currentImageIndex]}
+              alt={product.name}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+            />
+
+          </div>
             
-            {images.length > 1 && (
-              <div className="grid grid-cols-3 gap-4">
-                {images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentImageIndex(index)}
-                    className={`aspect-square overflow-hidden rounded-lg ${
-                      currentImageIndex === index
-                        ? 'ring-2 ring-[#5b4c9f]'
-                        : 'opacity-60 hover:opacity-100'
-                    } transition-all`}
-                  >
-                    <img
-                      src={image}
-                      alt={`${product.name} ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
-            )}
+            
           </div>
 
           {/* Product Info */}
