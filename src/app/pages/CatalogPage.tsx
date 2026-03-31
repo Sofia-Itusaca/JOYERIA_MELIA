@@ -247,7 +247,7 @@ export function CatalogPage() {
                           </h3>
                         </button>
                         
-                        <div className="flex items-center justify-between mt-1">
+                        <div className="flex items-center justify-between gap-1 mt-1">
                           <p className="text-sm font-semibold text-[#5b4c9f]">
                             ${product.price.toLocaleString()}
                           </p>
@@ -255,7 +255,7 @@ export function CatalogPage() {
                           <Button
                             size="sm"
                             onClick={() => handleAddToCart(product)}
-                            className="bg-[#5b4c9f] hover:bg-[#4a3d85] text-white"
+                            className="bg-[#5b4c9f] hover:bg-[#4a3d85] text-white px-2 py-1"
                           >
                             <ShoppingCart className="w-4 h-4" />
                           </Button>
