@@ -221,7 +221,7 @@ export function CatalogPage() {
                         onClick={() => navigate(`/producto/${product.id}`)}
                         className="w-full"
                       >
-                        <div className="aspect-square overflow-hidden bg-[#f5f5f7]">
+                        <div className="aspect-square overflow-hidden bg-[#f5f5f7] max-h-40">
                           <img
                             src={mainImage}
                             alt={product.name}
@@ -230,18 +230,18 @@ export function CatalogPage() {
                         </div>
                       </button>
                       
-                      <div className="p-5">
+                      <div className="p-3">
                         <button
                           onClick={() => navigate(`/producto/${product.id}`)}
                           className="w-full text-left"
                         >
-                          <h3 className="font-semibold text-[#1a1f3a] mb-2 group-hover:text-[#5b4c9f] transition-colors line-clamp-2">
+                          <h3 className="text-sm font-medium text-[#1a1f3a] mb-1 group-hover:text-[#5b4c9f] transition-colors line-clamp-2">
                             {product.name}
                           </h3>
                         </button>
                         
-                        <div className="flex items-center justify-between mt-3">
-                          <p className="text-2xl font-bold text-[#5b4c9f]">
+                        <div className="flex items-center justify-between mt-1">
+                          <p className="text-base font-semibold text-[#5b4c9f]">
                             ${product.price.toLocaleString()}
                           </p>
                           
