@@ -295,7 +295,7 @@ export function CatalogPage() {
       </Button>
       </div>
       {showFilter && (
-      <div className="fixed inset-0 z-50 flex items-end pb-20">
+      <div className="fixed inset-0 z-50 flex items-end pb-10">
         
         {/* Background */}
         <div 
