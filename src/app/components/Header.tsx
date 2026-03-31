@@ -46,8 +46,8 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-border shadow-sm">
-      <div className="max-w-[1600px] mx-auto">
+    <header className="sticky top-0 z-50 bg-white border-b border-border shadow-sm w-full overflow-x-hidden">
+      <div className="w-full max-w-7xl mx-auto px-3">
         {/* Desktop Header */}
         <div className="hidden lg:flex items-center justify-between px-8 py-4">
           {/* Logo */}
