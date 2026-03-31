@@ -80,7 +80,7 @@ export function CatalogPage() {
 
   return (
     <div className="min-h-screen bg-[#f5f5f7] overflow-x-hidden">
-      <div className="max-w-[1600px] mx-auto px-2 py-3">
+      <div className="max-w-[1600px] mx-auto px-1 py-2">
         <div className="grid lg:grid-cols-[280px_1fr] gap-8">
           {/* Filters Sidebar */}
           <aside className="space-y-6 lg:block hidden">
@@ -237,7 +237,7 @@ export function CatalogPage() {
                         </div>
                       </button>
                       
-                      <div className="p-2">
+                      <div className="p-1.5">
                         <button
                           onClick={() => navigate(`/producto/${product.id}`)}
                           className="w-full text-left"
