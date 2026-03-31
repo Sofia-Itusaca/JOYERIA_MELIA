@@ -304,7 +304,7 @@ export function CatalogPage() {
         />
 
         {/* Panel */}
-        <div className="relative bg-white w-full rounded-t-2xl p-6 max-h-[60vh] overflow-y-auto">
+        <div className="relative bg-white w-full rounded-t-2xl p-6 max-h-[80vh] overflow-y-auto transition-transform duration-300">
           
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">
@@ -342,15 +342,20 @@ export function CatalogPage() {
           )}
 
           {filterStep === 2 && (
-            <div className="space-y-2">
+            <div className="grid grid-cols-3 gap-3">
               {materialFilters.slice(1).map((material) => (
                 <button
                   key={material.value}
                   onClick={() => {
                     setSelectedMaterial(material.value);
-                    setFilterStep(3);
+                    setTimeout(() => setFilterStep(3), 300);
                   }}
-                  className="w-full text-left p-3 rounded-lg hover:bg-gray-100"
+                  className={`p-3 rounded-full text-sm border transition-all
+                  ${
+                    selectedMaterial === material.value
+                    ? "bg-[#5b4c9f] text-white border-[#5b4c9f]"
+                    : "bg-white border-gray-300 hover:border-[#5b4c9f]"
+                  }`}
                 >
                   {material.label}
                 </button>
@@ -359,16 +364,23 @@ export function CatalogPage() {
           )}
 
           {filterStep === 3 && (
-            <div className="space-y-2">
+            <div className="grid grid-cols-2 gap-3">
               {genderFilters.map((gender) => (
                 <button
                   key={gender.value}
                   onClick={() => {
                     setSelectedGender(gender.value);
-                    setShowFilter(false);
-                    setFilterStep(1);
+                    setTimeout(() => {
+                      setShowFilter(false);
+                      setFilterStep(1);
+                    }, 300);
                   }}
-                  className="w-full text-left p-3 rounded-lg hover:bg-gray-100"
+                  className={`p-3 rounded-full text-sm border transition-all
+                  ${
+                    selectedGender === gender.value
+                    ? "bg-[#5b4c9f] text-white border-[#5b4c9f]"
+                    : "bg-white border-gray-300 hover:border-[#5b4c9f]"
+                  }`}
                 >
                   {gender.label}
                 </button>
