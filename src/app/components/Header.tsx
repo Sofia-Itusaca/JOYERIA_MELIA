@@ -171,22 +171,6 @@ export function Header() {
         {isMobileMenuOpen && (
           <div className="fixed top-16 right-0 w-[260px] max-w-[90vw] bg-white shadow-xl z-50 rounded-l-xl border border-gray-100 overflow-hidden">
             <div className="px-4 py-3 overflow-y-auto max-h-[70vh]">
-              <form onSubmit={handleSearch} className="relative mb-3">
-                <Input
-                  type="text"
-                  placeholder="Buscar joyas..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pr-10 bg-[#f5f5f7] border-0"
-                />
-                <button
-                  type="submit"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-[#1a1f3a]"
-                >
-                  <Search className="w-4 h-4" />
-                </button>
-              </form>
-
               <nav className="space-y-2">
                 <Link
                   to="/catalogo?gender=ella"
