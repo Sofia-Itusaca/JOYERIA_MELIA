@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { mockProducts } from '../data/mock-data';
 import { Button } from '../components/ui/button';
@@ -46,6 +46,15 @@ export function CatalogPage() {
   const [showFilter, setShowFilter] = useState(false);
   const [filterStep, setFilterStep] = useState(1);
 
+  useEffect(() => {
+  const gender = searchParams.get('gender');
+  const category = searchParams.get('category');
+
+  if (gender) setSelectedGender(gender);
+  if (category) setSelectedCategory(category);
+
+}, [searchParams]);
+
   const filteredProducts = useMemo(() => {
     return mockProducts.filter(product => {
       if (!product.active) return false;
@@ -80,7 +89,7 @@ export function CatalogPage() {
 
   return (
     <div className="min-h-screen bg-[#f5f5f7] overflow-x-hidden">
-      <div className="max-w-[1600px] mx-auto px-1 py-2">
+      <div className="max-w-[1600px] mx-auto px-3 py-2">
         <div className="grid lg:grid-cols-[280px_1fr] gap-8">
           {/* Filters Sidebar */}
           <aside className="space-y-6 lg:block hidden">
@@ -215,7 +224,7 @@ export function CatalogPage() {
                 </Button>
               </div>
             ) : (
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-2">
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {filteredProducts.map((product) => {
                   const mainImage = product.materials[0].images[0];
                   
