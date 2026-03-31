@@ -8,7 +8,7 @@ import BottomNav from '../components/BottomNav';
 export function Root() {
   return (
     <AppProvider>
-      <div className="min-h-screen bg-white flex flex-col">
+      <div className="min-h-screen bg-white flex flex-col overflow-x-hidden">
         <Header />
         <main className="flex-1">
           <Outlet />
