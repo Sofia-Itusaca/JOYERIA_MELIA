@@ -5,6 +5,10 @@ import { Button } from '../components/ui/button';
 import { ShoppingCart, ArrowLeft, Star } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { Badge } from '../components/ui/badge';
+import { useRef } from "react";
+
+const touchStart = useRef(0);
+const touchEnd = useRef(0);
 
 export function ProductPage() {
   const { id } = useParams();
@@ -58,21 +62,33 @@ export function ProductPage() {
         <div className="grid lg:grid-cols-2 gap-4 bg-white rounded-lg p-4 shadow-sm">
           {/* Images */}
           <div className="space-y-4">
-            <div className="relative aspect-[4/5] max-h-[420px] overflow-hidden rounded-lg bg-[#f5f5f7]">
-  
-            {/* contador */}
-            <div className="absolute top-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded-full z-10">
-              {currentImageIndex + 1}/{images.length}
-            </div>
-            <img
-              src={images[currentImageIndex]}
-              alt={product.name}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-            />
+            <div
+            className="relative aspect-square w-full max-w-md mx-auto overflow-hidden rounded-lg bg-[#f5f5f7] "
+            onTouchStart={(e) => {
+              touchStart.current = e.targetTouches[0].clientX;
+            }}
+            onTouchMove={(e) => {
+              touchEnd.current = e.targetTouches[0].clientX;
+            }}
+            onTouchEnd={() => {
+              if (touchStart.current - touchEnd.current > 50) {
+                setCurrentImageIndex(
+                  (currentImageIndex + 1) % images.length
+                );
+              }
 
+              if (touchStart.current - touchEnd.current < -50) {
+                setCurrentImageIndex(
+                  currentImageIndex === 0
+                    ? images.length - 1
+                    : currentImageIndex - 1
+                );
+              }
+            }}
+          >
+            
+            
           </div>
-            
-            
           </div>
 
           {/* Product Info */}
