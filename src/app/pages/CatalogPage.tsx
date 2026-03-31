@@ -320,7 +320,7 @@ export function CatalogPage() {
           </div>
 
           {filterStep === 1 && (
-            <div className="space-y-2">
+            <div className="grid grid-cols-3 gap-3">
               {categories.slice(1).map((category) => (
                 <button
                   key={category.value}
@@ -328,7 +328,12 @@ export function CatalogPage() {
                     setSelectedCategory(category.value);
                     setFilterStep(2);
                   }}
-                  className="w-full text-left p-3 rounded-lg hover:bg-gray-100"
+                  className={`p-3 rounded-full text-sm border transition-all
+                  ${
+                  selectedCategory === category.value
+                  ? "bg-[#5b4c9f] text-white border-[#5b4c9f]"
+                  : "bg-white border-gray-300 hover:border-[#5b4c9f]"
+                  }`}
                 >
                   {category.label}
                 </button>
