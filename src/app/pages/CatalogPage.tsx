@@ -80,7 +80,7 @@ export function CatalogPage() {
 
   return (
     <div className="min-h-screen bg-[#f5f5f7]">
-      <div className="max-w-[1600px] mx-auto px-4 py-8">
+      <div className="max-w-[1600px] mx-auto px-4 py-3">
         <div className="grid lg:grid-cols-[280px_1fr] gap-8">
           {/* Filters Sidebar */}
           <aside className="space-y-6 lg:block hidden">
@@ -159,7 +159,7 @@ export function CatalogPage() {
           {/* Products Grid */}
           <div>
             {/* Mobile Filters */}
-            <div className="lg:hidden mb-6 space-y-4">
+            <div className="lg:hidden mb-3 space-y-2">
               <div className="bg-white rounded-lg p-4 shadow-sm">
                 <div className="relative">
                   <Input
@@ -188,7 +188,7 @@ export function CatalogPage() {
               </div>
             </div>
 
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-3">
               <h1 className="text-2xl font-bold text-[#1a1f3a]">
                 {filteredProducts.length} Productos
               </h1>
@@ -217,7 +217,7 @@ export function CatalogPage() {
                   return (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group"
+                      className="bg-white rounded-lg overflow-hidden border border-gray-200 hover:shadow-md transition-all duration-300 group"
                     >
                       <button
                         onClick={() => navigate(`/producto/${product.id}`)}
@@ -232,18 +232,18 @@ export function CatalogPage() {
                         </div>
                       </button>
                       
-                      <div className="p-3">
+                      <div className="p-2">
                         <button
                           onClick={() => navigate(`/producto/${product.id}`)}
                           className="w-full text-left"
                         >
-                          <h3 className="text-sm font-medium text-[#1a1f3a] mb-1 group-hover:text-[#5b4c9f] transition-colors line-clamp-2">
+                          <h3 className="text-xs font-medium text-[#1a1f3a] mb-1 group-hover:text-[#5b4c9f] transition-colors line-clamp-2">
                             {product.name}
                           </h3>
                         </button>
                         
                         <div className="flex items-center justify-between mt-1">
-                          <p className="text-base font-semibold text-[#5b4c9f]">
+                          <p className="text-sm font-semibold text-[#5b4c9f]">
                             ${product.price.toLocaleString()}
                           </p>
                           
@@ -256,7 +256,7 @@ export function CatalogPage() {
                           </Button>
                         </div>
 
-                        <p className="text-xs text-gray-500 mt-2">
+                        <p className="text-[10px] text-gray-400 mt-1">
                           Vendido {product.soldCount} veces
                         </p>
                       </div>
