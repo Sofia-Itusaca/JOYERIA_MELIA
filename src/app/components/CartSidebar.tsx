@@ -1,11 +1,16 @@
 import { X, Minus, Plus, ShoppingBag } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { Button } from './ui/button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useEffect } from "react";
 
 export function CartSidebar() {
   const { cart, isCartOpen, closeCart, updateCartQuantity, removeFromCart } = useApp();
   const navigate = useNavigate();
+  const location = useLocation();
+    useEffect(() => {
+    closeCart();
+  }, [location.pathname]);
 
   const total = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
@@ -25,7 +30,7 @@ export function CartSidebar() {
       />
 
       {/* Sidebar */}
-      <div className="fixed right-0 top-0 h-full w-full sm:w-[400px] bg-white z-50 shadow-2xl flex flex-col">
+      <div className="fixed right-0 top-0 h-full w-[85%] max-w-[380px] sm:w-[400px] bg-white z-50 shadow-2xl flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-border">
           <h2 className="text-xl font-semibold text-[#1a1f3a]">Mi Carrito</h2>
@@ -57,7 +62,7 @@ export function CartSidebar() {
 
                 return (
                   <div key={`${item.productId}-${item.selectedMaterial}-${item.selectedSize}`} 
-                       className="flex gap-4 pb-4 border-b border-border">
+                        className="flex gap-4 pb-4 border-b border-border">
                     <img
                       src={image}
                       alt={item.product.name}
