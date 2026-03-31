@@ -169,8 +169,8 @@ export function Header() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="fixed top-14 left-0 w-full bg-white shadow-lg z-50 rounded-b-xl">
-            <div className="px-4 py-3">
+          <div className="fixed top-16 right-0 w-[260px] max-w-[85vw] bg-white shadow-xl z-50 rounded-l-xl border border-gray-100">
+            <div className="px-4 py-3 overflow-y-auto max-h-[70vh]">
               <form onSubmit={handleSearch} className="relative mb-3">
                 <Input
                   type="text"
