@@ -66,7 +66,7 @@ export function CatalogPage() {
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
         return product.name.toLowerCase().includes(query) || 
-               product.description.toLowerCase().includes(query);
+              product.description.toLowerCase().includes(query);
       }
       
       return true;
@@ -295,7 +295,7 @@ export function CatalogPage() {
       </Button>
       </div>
       {showFilter && (
-      <div className="fixed inset-0 z-50 flex items-end">
+      <div className="fixed inset-0 z-50 flex items-end pb-20">
         
         {/* Background */}
         <div 
@@ -304,7 +304,7 @@ export function CatalogPage() {
         />
 
         {/* Panel */}
-        <div className="relative bg-white w-full rounded-t-2xl p-6 max-h-[80vh] overflow-y-auto transition-transform duration-300">
+        <div className="relative bg-white w-full rounded-t-2xl p-6 max-h-[85vh] overflow-y-auto transition-transform duration-300">
           
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">
@@ -327,6 +327,7 @@ export function CatalogPage() {
                   onClick={() => {
                     setSelectedCategory(category.value);
                     setFilterStep(2);
+                    setTimeout(() => setFilterStep(2), 300);
                   }}
                   className={`p-3 rounded-full text-sm border transition-all
                   ${
