@@ -326,7 +326,6 @@ export function CatalogPage() {
                   key={category.value}
                   onClick={() => {
                     setSelectedCategory(category.value);
-                    setFilterStep(2);
                     setTimeout(() => setFilterStep(2), 300);
                   }}
                   className={`p-3 rounded-full text-sm border transition-all
