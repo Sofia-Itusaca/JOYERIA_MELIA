@@ -6,8 +6,6 @@ const location = useLocation();
 
 const navItems = [
     { name: "Inicio", icon: Home, path: "/" },
-    { name: "Categorías", icon: Grid, path: "/catalogo" },
-    { name: "Buscar", icon: Search, path: "/catalogo" },
     { name: "Perfil", icon: User, path: "/perfil" },
     { name: "Carrito", icon: ShoppingCart, path: "/checkout" },
 ];
