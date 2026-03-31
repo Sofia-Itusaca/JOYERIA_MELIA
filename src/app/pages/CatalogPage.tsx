@@ -45,7 +45,13 @@ export function CatalogPage() {
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
   const [showFilter, setShowFilter] = useState(false);
   const [filterStep, setFilterStep] = useState(1);
-
+  
+  const [showCartOptions, setShowCartOptions] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedCartMaterial, setSelectedCartMaterial] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedLength, setSelectedLength] = useState<number | undefined>(undefined);
+  
   useEffect(() => {
   const gender = searchParams.get('gender');
   const category = searchParams.get('category');
@@ -83,9 +89,24 @@ export function CatalogPage() {
   }, [selectedCategory, selectedGender, selectedMaterial, searchQuery]);
 
   const handleAddToCart = (product: Product) => {
-    const defaultMaterial = product.materials[0].type;
-    addToCart(product, defaultMaterial);
-  };
+
+      const hasMaterial = product.materials.length > 1;
+      const hasSize = product.sizes && product.sizes.length > 0;
+      const hasLength = product.lengths && product.lengths.length > 0;
+
+      if (hasMaterial || hasSize || hasLength) {
+        setSelectedProduct(product);
+        setShowCartOptions(true);
+
+        setSelectedCartMaterial(product.materials[0]?.type || "");
+        setSelectedSize(product.sizes?.[0] || "");
+        setSelectedLength(product.lengths?.[0]);
+
+        return;
+      }
+
+      addToCart(product, product.materials[0].type);
+    };
 
   return (
     <div className="min-h-screen bg-[#f5f5f7] overflow-x-hidden w-full max-w-full">
@@ -405,6 +426,103 @@ export function CatalogPage() {
         </div>
       </div>
     )}
+          {showCartOptions && selectedProduct && (
+
+        <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center px-4">
+
+      
+      <div className="bg-white rounded-xl p-5 w-full max-w-sm shadow-xl">
+
+        <h3 className="text-lg font-semibold mb-4 text-[#1a1f3a]">
+          Seleccionar opciones
+        </h3>
+
+        {/* Material */}
+        {selectedProduct.materials.length > 1 && (
+          <div className="mb-4">
+            <p className="text-sm font-medium mb-2">Material</p>
+            <div className="flex gap-2 flex-wrap">
+              {selectedProduct.materials.map(m => (
+                <button
+                  key={m.type}
+                  onClick={() => setSelectedCartMaterial(m.type)}
+                  className={`px-3 py-1 rounded-full border text-sm transition
+                  ${selectedCartMaterial === m.type
+                    ? "bg-[#5b4c9f] text-white border-[#5b4c9f]"
+                    : "bg-white border-gray-300"}
+                  `}
+                >
+                  {m.type}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Talla */}
+        {selectedProduct.sizes && (
+          <div className="mb-4">
+            <p className="text-sm font-medium mb-2">Talla</p>
+            <div className="flex gap-2 flex-wrap">
+              {selectedProduct.sizes.map(size => (
+                <button
+                  key={size}
+                  onClick={() => setSelectedSize(size)}
+                  className={`px-3 py-1 rounded-full border text-sm transition
+                  ${selectedSize === size
+                    ? "bg-[#5b4c9f] text-white border-[#5b4c9f]"
+                    : "bg-white border-gray-300"}
+                  `}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Largo */}
+        {selectedProduct.lengths && (
+          <div className="mb-4">
+            <p className="text-sm font-medium mb-2">Largo</p>
+            <div className="flex gap-2 flex-wrap">
+              {selectedProduct.lengths.map(length => (
+                <button
+                  key={length}
+                  onClick={() => setSelectedLength(length)}
+                  className={`px-3 py-1 rounded-full border text-sm transition
+                  ${selectedLength === length
+                    ? "bg-[#5b4c9f] text-white border-[#5b4c9f]"
+                    : "bg-white border-gray-300"}
+                  `}
+                >
+                  {length}cm
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <button
+          onClick={() => {
+            addToCart(
+              selectedProduct,
+              selectedCartMaterial,
+              selectedSize,
+              selectedLength
+            );
+            setShowCartOptions(false);
+          }}
+          className="w-full mt-3 bg-[#5b4c9f] hover:bg-[#4a3d85] text-white py-2 rounded-lg"
+        >
+          Agregar al carrito
+        </button>
+
+      </div>
+
+        </div>
+      )}
+
     </div>
   );
 }
