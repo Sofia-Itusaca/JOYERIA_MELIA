@@ -109,7 +109,7 @@ export function CatalogPage() {
     };
 
   return (
-    <div className="min-h-screen bg-[#f5f5f7] overflow-x-hidden w-full max-w-[400px] md:max-w-full mx-auto">
+    <div className="min-h-screen bg-[#f5f5f7] overflow-x-hidden w-full max-w-[300px] md:max-w-full mx-auto">
       <div className="w-full max-w-[1400px] mx-auto px-0.5">
         <div className="grid lg:grid-cols-[260px_1fr] gap-4 w-full">
           {/* Filters Sidebar */}
