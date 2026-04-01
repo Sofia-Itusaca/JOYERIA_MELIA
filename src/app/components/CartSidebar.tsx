@@ -81,6 +81,11 @@ export function CartSidebar() {
                     closeCart();
                     }}
                     >
+                    <img
+                      src={image}
+                      alt={item.product.name}
+                      className="w-20 h-20 object-cover rounded-md"
+                    />
                     
                     <div className="flex-1 min-w-0">
                       <h3 className="text-sm font-medium text-[#1a1f3a] truncate">
