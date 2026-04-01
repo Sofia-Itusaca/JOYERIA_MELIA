@@ -67,6 +67,12 @@ export function Header() {
               <Link
                 key={category.name}
                 to={category.path}
+                onClick={() => {
+                  if (category.name === "Inicio") {
+                    navigate("/catalogo");
+                    window.location.reload();
+                  }
+                }}
                 className="text-sm text-[#1a1f3a] hover:text-[#5b4c9f] transition-colors font-medium"
               >
                 {category.name}

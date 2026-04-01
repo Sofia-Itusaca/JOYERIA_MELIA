@@ -114,39 +114,7 @@ export function CatalogPage() {
         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-4 w-full">
           {/* Filters Sidebar */}
           <aside className="space-y-6 lg:block hidden">
-            <div className="bg-white rounded-lg p-6 shadow-sm">
-              <h2 className="text-lg font-semibold text-[#1a1f3a] mb-4">Buscar</h2>
-              <div className="relative">
-                <Input
-                  type="text"
-                  placeholder="Buscar productos..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pr-10"
-                />
-                <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg p-6 shadow-sm">
-              <h2 className="text-lg font-semibold text-[#1a1f3a] mb-4">Categoría</h2>
-              <div className="space-y-2">
-                {categories.map((category) => (
-                  <button
-                    key={category.value}
-                    onClick={() => setSelectedCategory(category.value)}
-                    className={`w-full text-left px-3 py-2 rounded-md transition-colors ${
-                      selectedCategory === category.value
-                        ? 'bg-[#5b4c9f] text-white'
-                        : 'hover:bg-[#f5f5f7] text-[#1a1f3a]'
-                    }`}
-                  >
-                    {category.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
+            
             <div className="bg-white rounded-lg p-6 shadow-sm">
               <h2 className="text-lg font-semibold text-[#1a1f3a] mb-4">Para Quién</h2>
               <div className="space-y-2">
@@ -245,7 +213,7 @@ export function CatalogPage() {
                 </Button>
               </div>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 w-full">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-3 w-full">
                 {filteredProducts.map((product) => {
                   const mainImage = product.materials[0].images[0];
                   
