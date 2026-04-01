@@ -4,10 +4,12 @@ import { CartSidebar } from '../components/CartSidebar';
 import { Footer } from '../components/Footer';
 import { AppProvider } from '../context/AppContext';
 import BottomNav from '../components/BottomNav';
+import { ScrollToTop } from '../components/ScrollToTop';
 
 export function Root() {
   return (
     <AppProvider>
+      <ScrollToTop />
       <div className="min-h-screen bg-white flex flex-col w-full overflow-x-hidden">
         <Header />
         <main className="flex-1 w-full overflow-x-hidden">
