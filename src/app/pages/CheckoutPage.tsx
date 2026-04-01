@@ -149,37 +149,59 @@ export function CheckoutPage() {
 
               <div className="space-y-4 mb-6">
                 {cart.map((item) => {
-                  const selectedMaterialData = item.product.materials.find(
-                    m => m.type === item.selectedMaterial
-                  );
-                  const image = selectedMaterialData?.images[0] || '';
+                const selectedMaterialData = item.product.materials.find(
+                m => m.type === item.selectedMaterial
+                );
+                const image = selectedMaterialData?.images[0] || '';
 
-                  return (
-                    <div key={`${item.productId}-${item.selectedMaterial}`} 
-                         className="flex gap-4">
-                      <img
-                        src={image}
-                        alt={item.product.name}
-                        className="w-20 h-20 object-cover rounded-md"
-                      />
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-sm font-medium text-[#1a1f3a] truncate">
-                          {item.product.name}
-                        </h3>
-                        <p className="text-xs text-gray-500 mt-1 capitalize">
-                          {item.selectedMaterial.replace('-', ' ')}
-                          {item.selectedSize && ` • Talla ${item.selectedSize}`}
-                          {item.selectedLength && ` • ${item.selectedLength}cm`}
-                        </p>
-                        <p className="text-sm text-gray-600 mt-1">
-                          Cantidad: {item.quantity}
-                        </p>
-                      </div>
-                      <p className="text-sm font-semibold text-[#5b4c9f]">
-                        ${(item.product.price * item.quantity).toLocaleString()}
-                      </p>
-                    </div>
-                  );
+                return (
+                <div
+                key={`${item.productId}-${item.selectedMaterial}`}
+                className="flex gap-4 items-start"
+                >
+                <img
+                src={image}
+                alt={item.product.name}
+                className="w-20 h-20 object-cover rounded-md"
+                />
+
+                <div className="flex-1 min-w-0">
+                <h3 className="text-sm font-medium text-[#1a1f3a] truncate">
+                {item.product.name}
+                </h3>
+
+                <p className="text-xs text-gray-500 mt-1 capitalize">
+                {item.selectedMaterial.replace('-', ' ')}
+                {item.selectedSize && ` • Talla ${item.selectedSize}`}
+                {item.selectedLength && ` • ${item.selectedLength}cm`}
+                </p>
+
+                <p className="text-sm text-gray-600 mt-1">
+                Cantidad: {item.quantity}
+                </p>
+                </div>
+
+                <div className="flex flex-col items-end gap-2">
+                <p className="text-sm font-semibold text-[#5b4c9f]">
+                ${(item.product.price * item.quantity).toLocaleString()}
+                </p>
+
+                <Button
+                size="sm"
+                className="bg-[#5b4c9f] hover:bg-[#4a3d85] text-white text-xs px-3 py-1 h-7"
+                onClick={() => {
+                navigate('/');
+                setTimeout(() => {
+                window.dispatchEvent(new Event("openCart"));
+                }, 200);
+                }}
+                >
+                Editar
+                </Button>
+                </div>
+
+                </div>
+                );
                 })}
               </div>
 

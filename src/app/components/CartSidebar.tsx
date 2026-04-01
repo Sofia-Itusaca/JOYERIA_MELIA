@@ -5,7 +5,19 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from "react";
 
 export function CartSidebar() {
-  const { cart, isCartOpen, closeCart, updateCartQuantity, removeFromCart } = useApp();
+    useEffect(() => {
+    const handleOpenCart = () => {
+      toggleCart();
+    };
+
+    window.addEventListener("openCart", handleOpenCart);
+
+    return () => {
+      window.removeEventListener("openCart", handleOpenCart);
+    };
+  }, []);
+
+  const { cart, isCartOpen, closeCart, updateCartQuantity, removeFromCart, toggleCart } = useApp();
   const navigate = useNavigate();
   const location = useLocation();
     useEffect(() => {
