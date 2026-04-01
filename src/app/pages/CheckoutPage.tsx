@@ -54,17 +54,17 @@ export function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-[#f5f5f7]">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto px-4 py-3">
         <Button
           variant="ghost"
           onClick={() => navigate('/catalogo')}
-          className="mb-6"
+          className="mb-2"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Volver al catálogo
         </Button>
 
-        <h1 className="text-3xl font-bold text-[#1a1f3a] mb-8">Finalizar Compra</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-[#1a1f3a] mb-4">Finalizar Compra</h1>
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Order Form */}
