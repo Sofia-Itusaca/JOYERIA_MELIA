@@ -147,6 +147,19 @@ export function CheckoutPage() {
                 Resumen del Pedido
               </h2>
 
+              <Button
+              variant="outline"
+              className="mb-4 w-full"
+              onClick={() => {
+              navigate('/');
+              setTimeout(() => {
+              window.dispatchEvent(new Event("openCart"));
+              }, 200);
+              }}
+              >
+              Editar carrito
+              </Button>
+
               <div className="space-y-4 mb-6">
                 {cart.map((item) => {
                 const selectedMaterialData = item.product.materials.find(
@@ -186,24 +199,13 @@ export function CheckoutPage() {
                 ${(item.product.price * item.quantity).toLocaleString()}
                 </p>
 
-                <Button
-                size="sm"
-                className="bg-[#5b4c9f] hover:bg-[#4a3d85] text-white text-xs px-3 py-1 h-7"
-                onClick={() => {
-                navigate('/');
-                setTimeout(() => {
-                window.dispatchEvent(new Event("openCart"));
-                }, 200);
-                }}
-                >
-                Editar
-                </Button>
+                
                 </div>
 
                 </div>
                 );
                 })}
-              </div>
+                </div>
 
               <div className="border-t border-border pt-4 space-y-2">
                 <div className="flex justify-between text-sm">

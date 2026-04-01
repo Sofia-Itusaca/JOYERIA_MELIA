@@ -73,13 +73,14 @@ export function CartSidebar() {
                 const image = selectedMaterialData?.images[0] || '';
 
                 return (
-                  <div key={`${item.productId}-${item.selectedMaterial}-${item.selectedSize}`} 
-                        className="flex gap-4 pb-4 border-b border-border">
-                    <img
-                      src={image}
-                      alt={item.product.name}
-                      className="w-20 h-20 object-cover rounded-md"
-                    />
+                  <div 
+                    key={`${item.productId}-${item.selectedMaterial}-${item.selectedSize}`}
+                    className="flex gap-4 pb-4 border-b border-border cursor-pointer hover:bg-gray-50 p-2 rounded-lg"
+                    onClick={() => {
+                    navigate(`/producto/${item.productId}`);
+                    closeCart();
+                    }}
+                    >
                     
                     <div className="flex-1 min-w-0">
                       <h3 className="text-sm font-medium text-[#1a1f3a] truncate">
