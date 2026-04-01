@@ -245,7 +245,7 @@ export function CatalogPage() {
                 </Button>
               </div>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 w-full">
+              <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-2 w-full">
                 {filteredProducts.map((product) => {
                   const mainImage = product.materials[0].images[0];
                   
