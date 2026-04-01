@@ -252,7 +252,7 @@ export function CatalogPage() {
                   return (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg overflow-hidden border border-gray-200 hover:shadow-md transition-all duration-300 group"
+                      className="bg-white rounded-lg overflow-hidden border w-full border-gray-200 hover:shadow-md transition-all duration-300 group"
                     >
                       <button
                         onClick={() => navigate(`/producto/${product.id}`)}
@@ -267,7 +267,7 @@ export function CatalogPage() {
                         </div>
                       </button>
                       
-                      <div className="p-1.5">
+                      <div className="p-2">
                         <button
                           onClick={() => navigate(`/producto/${product.id}`)}
                           className="w-full text-left"
