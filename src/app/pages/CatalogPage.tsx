@@ -111,7 +111,7 @@ export function CatalogPage() {
   return (
     <div className="min-h-screen bg-[#f5f5f7] overflow-x-hidden w-full">
       <div className="w-full px-2">
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-4 w-full">
           {/* Filters Sidebar */}
           <aside className="space-y-6 lg:block hidden">
             <div className="bg-white rounded-lg p-6 shadow-sm">
@@ -245,7 +245,7 @@ export function CatalogPage() {
                 </Button>
               </div>
             ) : (
-              <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-2 w-full">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 w-full">
                 {filteredProducts.map((product) => {
                   const mainImage = product.materials[0].images[0];
                   
