@@ -3,8 +3,12 @@ import { useApp } from '../context/AppContext';
 import { Button } from './ui/button';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from "react";
+import { useState } from "react";
 
 export function CartSidebar() {
+  const [showOptions, setShowOptions] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [selectedMaterial, setSelectedMaterial] = useState("");
     useEffect(() => {
     const handleOpenCart = () => {
       toggleCart();
@@ -17,7 +21,7 @@ export function CartSidebar() {
     };
   }, []);
 
-  const { cart, isCartOpen, closeCart, updateCartQuantity, removeFromCart, toggleCart } = useApp();
+  const { cart, isCartOpen, closeCart, updateCartQuantity, removeFromCart, toggleCart, addToCart } = useApp();
   const navigate = useNavigate();
   const location = useLocation();
     useEffect(() => {
@@ -118,8 +122,8 @@ export function CartSidebar() {
                           className="h-7 w-7"
                           onClick={(e) => {
                             e.stopPropagation();
-                            navigate(`/producto/${item.productId}?edit=true`);
-                            closeCart();
+                            setSelectedItem(item);
+                            setShowOptions(true);
                           }}
                         >
                           <Plus className="w-3 h-3" />
@@ -168,6 +172,55 @@ export function CartSidebar() {
           </div>
         )}
       </div>
+
+      {showOptions && selectedItem && (
+      <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center px-4">
+
+      <div className="bg-white rounded-xl p-5 w-full max-w-sm shadow-xl">
+
+      <h3 className="text-lg font-semibold mb-4 text-[#1a1f3a]">
+      Seleccionar opciones
+      </h3>
+
+      {selectedItem.product.materials.length > 1 && (
+      <div className="mb-4">
+      <p className="text-sm font-medium mb-2">Material</p>
+      <div className="flex gap-2 flex-wrap">
+      {selectedItem.product.materials.map((m: any) => (
+      <button
+      key={m.type}
+      onClick={() => setSelectedMaterial(m.type)}
+      className={`px-3 py-1 rounded-full border text-sm
+      ${selectedMaterial === m.type 
+      ? "bg-[#5b4c9f] text-white border-[#5b4c9f]" 
+      : "bg-white border-gray-300"}
+      `}
+      >
+      {m.type}
+      </button>
+      ))}
+      </div>
+      </div>
+      )}
+
+      <button
+        onClick={() => {
+        addToCart(
+        selectedItem.product,
+        selectedMaterial || selectedItem.selectedMaterial,
+        selectedItem.selectedSize,
+        selectedItem.selectedLength
+        );
+        setShowOptions(false);
+        }}
+      className="w-full mt-3 bg-[#5b4c9f] text-white py-2 rounded-lg"
+      >
+      Agregar al carrito
+      </button>
+
+      </div>
+      </div>
+      )}
     </>
   );
 }
