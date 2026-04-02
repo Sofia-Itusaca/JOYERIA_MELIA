@@ -76,10 +76,12 @@ export function CartSidebar() {
                   <div 
                     key={`${item.productId}-${item.selectedMaterial}-${item.selectedSize}`}
                     className="flex gap-4 pb-4 border-b border-border cursor-pointer hover:bg-gray-50 p-2 rounded-lg"
-                    onClick={() => {
-                    navigate(`/producto/${item.productId}`);
-                    closeCart();
-                    }}
+                    onClick={(e) => {
+                      const target = e.target as HTMLElement;
+                      if (target.closest("button")) return;
+                      navigate(`/producto/${item.productId}`);
+                      closeCart();
+                      }}
                     >
                     <img
                       src={image}
@@ -114,7 +116,11 @@ export function CartSidebar() {
                           variant="outline"
                           size="icon"
                           className="h-7 w-7"
-                          onClick={() => updateCartQuantity(item.productId, item.quantity + 1)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/producto/${item.productId}?edit=true`);
+                            closeCart();
+                          }}
                         >
                           <Plus className="w-3 h-3" />
                         </Button>
