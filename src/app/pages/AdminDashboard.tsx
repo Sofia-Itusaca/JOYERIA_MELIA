@@ -58,7 +58,7 @@ export function AdminDashboard() {
   return (
     <div className="min-h-screen bg-[#f5f5f7]">
       <div className="max-w-[1600px] mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-8">
           <div>
             <Button
               variant="ghost"
@@ -70,7 +70,7 @@ export function AdminDashboard() {
             </Button>
             <h1 className="text-3xl font-bold text-[#1a1f3a]">Panel de Administrador</h1>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <Button
               onClick={() => navigate('/admin/sobre-nosotros')}
               variant="outline"

@@ -401,9 +401,18 @@ export function CatalogPage() {
       
       <div className="bg-white rounded-xl p-5 w-full max-w-sm shadow-xl">
 
-        <h3 className="text-lg font-semibold mb-4 text-[#1a1f3a]">
-          Seleccionar opciones
-        </h3>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold">
+            Seleccionar opciones
+          </h3>
+
+          <button
+            onClick={() => setShowCartOptions(false)}
+            className="text-gray-400 hover:text-gray-600 text-xl"
+          >
+            ✕
+          </button>
+        </div>
 
         {/* Material */}
         {selectedProduct.materials.length > 1 && (
