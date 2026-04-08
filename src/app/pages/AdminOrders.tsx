@@ -91,22 +91,22 @@ export function AdminOrders() {
         <h1 className="text-3xl font-bold text-[#1a1f3a] mb-8">Gestión de Pedidos</h1>
 
         {/* Stats Cards */}
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-lg p-6 shadow-sm">
+        <div className="grid grid-cols-4 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+          <div className="bg-white rounded-lg p-3 md:p-6 shadow-sm">
             <p className="text-sm text-gray-600 mb-1">Total Pedidos</p>
-            <p className="text-3xl font-bold text-[#1a1f3a]">{totalOrders}</p>
+            <p className="text-2xl md:text-3xl font-bold text-[#1a1f3a]">{totalOrders}</p>
           </div>
-          <div className="bg-white rounded-lg p-6 shadow-sm">
+          <div className="bg-white rounded-lg p-3 md:p-6 shadow-sm">
             <p className="text-sm text-gray-600 mb-1">Pendientes</p>
-            <p className="text-3xl font-bold text-yellow-600">{pendingOrders}</p>
+            <p className="text-2xl md:text-3xl font-bold text-yellow-600">{pendingOrders}</p>
           </div>
-          <div className="bg-white rounded-lg p-6 shadow-sm">
+          <div className="bg-white rounded-lg p-3 md:p-6 shadow-sm">
             <p className="text-sm text-gray-600 mb-1">En Proceso</p>
-            <p className="text-3xl font-bold text-blue-600">{processingOrders}</p>
+            <p className="text-2xl md:text-3xl font-bold text-blue-600">{processingOrders}</p>
           </div>
-          <div className="bg-white rounded-lg p-6 shadow-sm">
+          <div className="bg-white rounded-lg p-3 md:p-6 shadow-sm">
             <p className="text-sm text-gray-600 mb-1">Ingresos Totales</p>
-            <p className="text-3xl font-bold text-[#5b4c9f]">
+            <p className="text-2xl md:text-3xl font-bold text-[#5b4c9f]">
               ${totalRevenue.toLocaleString()}
             </p>
           </div>
