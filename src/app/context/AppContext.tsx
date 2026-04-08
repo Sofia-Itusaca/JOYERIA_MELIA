@@ -18,6 +18,7 @@ clearCart: () => void;
 toggleCart: () => void;
 closeCart: () => void;
 updateStoreInfo: (info: StoreInfo) => void;
+updateUser: (user: User) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -167,6 +168,10 @@ const updateStoreInfo = (info: StoreInfo) => {
 setStoreInfo(info);
 };
 
+const updateUser = (user: User) => {
+setCurrentUser(user);
+};
+
 return (
 <AppContext.Provider value={{
 currentUser,
@@ -182,7 +187,8 @@ updateCartQuantity,
 clearCart,
 toggleCart,
 closeCart,
-updateStoreInfo
+updateStoreInfo,
+updateUser
 }}>
 {children}
 </AppContext.Provider>

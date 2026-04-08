@@ -7,9 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { User, Package, MapPin, LogOut } from 'lucide-react';
 import { mockOrders } from '../data/mock-data';
 import { Badge } from '../components/ui/badge';
+import { useState } from 'react';
+import { Input } from '../components/ui/input';
 
 export function ProfilePage() {
-  const { currentUser, logout } = useApp();
+  const { currentUser, logout, updateUser } = useApp();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,6 +65,14 @@ export function ProfilePage() {
     }
   };
 
+    const [showEdit, setShowEdit] = useState(false);
+
+    const [formData, setFormData] = useState({
+      name: currentUser.name,
+      email: currentUser.email,
+      phone: currentUser.phone,
+      address: currentUser.address
+    });
   return (
     <div className="min-h-screen bg-[#f5f5f7]">
       <div className="max-w-6xl mx-auto px-4 py-8">
@@ -96,8 +106,15 @@ export function ProfilePage() {
 
           <TabsContent value="info">
             <Card>
-              <CardHeader>
+              <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Información Personal</CardTitle>
+
+                <Button
+                  className="bg-[#5b4c9f] hover:bg-[#4a3d85]"
+                  onClick={() => setShowEdit(true)}
+                >
+                  Editar
+                </Button>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid md:grid-cols-2 gap-4">
@@ -221,6 +238,76 @@ export function ProfilePage() {
             </Card>
           </TabsContent>
         </Tabs>
+        {showEdit && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg p-6 w-full max-w-md">
+
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-lg font-semibold">
+                  Editar Información
+                </h2>
+
+                <button
+                  onClick={() => setShowEdit(false)}
+                  className="text-gray-400 text-xl"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="space-y-4">
+
+                <Input
+                  placeholder="Nombre"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                />
+
+                <Input
+                  placeholder="Email"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                />
+
+                <Input
+                  placeholder="Teléfono"
+                  value={formData.phone}
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
+                />
+
+                <Input
+                  placeholder="Dirección"
+                  value={formData.address}
+                  onChange={(e) =>
+                    setFormData({ ...formData, address: e.target.value })
+                  }
+                />
+
+                <Button
+                  className="w-full bg-[#5b4c9f]"
+                  onClick={() => {
+                    updateUser({
+                      ...currentUser,
+                      ...formData
+                    });
+
+                    setShowEdit(false);
+                  }}
+                >
+                  Guardar
+                </Button>
+
+              </div>
+
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

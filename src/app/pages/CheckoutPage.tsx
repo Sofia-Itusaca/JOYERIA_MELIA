@@ -12,10 +12,10 @@ export function CheckoutPage() {
   const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
-    name: currentUser?.name || '',
-    phone: currentUser?.phone || '',
-    address: currentUser?.address || '',
-    email: currentUser?.email || ''
+  name: '',
+  phone: '',
+  address: '',
+  email: ''
   });
 
   const subtotal = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
