@@ -16,15 +16,21 @@ const categories = [
 ];
 
 export function Header() {
+  
   const { currentUser, cart, toggleCart } = useApp();
   const navigate = useNavigate();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-
+  const isAdmin = useApp().currentUser?.isAdmin;
   const cartItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const handleLogoClick = () => {
+  if (currentUser?.isAdmin) {
+    navigate("/admin");
+    return;
+  }
+    
     // Si está en admin, perfil, checkout o carrito, va al catálogo
     const specialRoutes = ['/admin', '/perfil', '/checkout'];
     const isSpecialRoute = specialRoutes.some(route => location.pathname.startsWith(route));
@@ -61,6 +67,7 @@ export function Header() {
           </button>
 
           {/* Navigation */}
+          {!isAdmin && (
           <nav className="flex items-center space-x-6">
             {categories.map((category) => (
               <Link
@@ -78,8 +85,10 @@ export function Header() {
               </Link>
             ))}
           </nav>
+          )}
 
           {/* Actions */}
+          {!isAdmin && (
           <div className="flex items-center space-x-4">
             {/* Search */}
             <form onSubmit={handleSearch} className="relative">
@@ -123,7 +132,9 @@ export function Header() {
               )}
             </Button>
           </div>
+          )}
         </div>
+            
 
         {/* Mobile Header */}
         <div className="lg:hidden flex items-center justify-between px-4 py-3">
@@ -137,6 +148,7 @@ export function Header() {
             <span className="text-lg font-semibold text-[#1a1f3a]">Joyas Meliá</span>
           </button>
 
+          {!isAdmin && (
           <div className="flex items-center space-x-2">
             <Button
               variant="ghost"
@@ -170,6 +182,7 @@ export function Header() {
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </Button>
           </div>
+          )}
         </div>
 
         {/* Mobile Menu */}
