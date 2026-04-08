@@ -78,22 +78,25 @@ export function CheckoutPage() {
           {/* Order Summary */}
           <div>
             <div className="max-w-6xl mx-auto px-4 py-3">
-              <h2 className="text-xl font-semibold text-[#1a1f3a] mb-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-semibold text-[#1a1f3a]">
                 Resumen del Pedido
-              </h2>
+                </h2>
 
-              <Button
-              variant="outline"
-              className="mb-4 w-full"
-              onClick={() => {
-              navigate('/');
-              setTimeout(() => {
-              window.dispatchEvent(new Event("openCart"));
-              }, 200);
-              }}
-              >
-              Editar carrito
-              </Button>
+                <Button
+                size="sm"
+                className="bg-[#5b4c9f] hover:bg-[#4a3d85] text-white"
+                onClick={() => {
+                navigate('/');
+                setTimeout(() => {
+                window.dispatchEvent(new Event("openCart"));
+                }, 200);
+                }}
+                >
+                Editar carrito
+                </Button>
+
+                </div>
 
               <div className="space-y-4 mb-6">
                 {cart.map((item) => {
