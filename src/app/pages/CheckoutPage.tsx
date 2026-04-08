@@ -78,6 +78,7 @@ export function CheckoutPage() {
           {/* Order Summary */}
           <div>
             <div className="max-w-6xl mx-auto px-4 py-3">
+              <div className="bg-white rounded-lg p-6 shadow-sm mt-6">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-semibold text-[#1a1f3a]">
                 Resumen del Pedido
@@ -97,6 +98,8 @@ export function CheckoutPage() {
                 </Button>
 
                 </div>
+                </div>
+
 
               <div className="space-y-4 mb-6">
                 {cart.map((item) => {

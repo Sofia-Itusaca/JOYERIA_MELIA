@@ -12,8 +12,7 @@ const categories = [
   { name: 'Pulseras', path: '/catalogo?category=bracelets' },
   { name: 'Aretes', path: '/catalogo?category=earrings' },
   { name: 'Relojes', path: '/catalogo?category=watches' },
-  { name: 'Para ellos', path: '/catalogo?gender=ellos' },
-  { name: 'Babys', path: '/catalogo?gender=babys' }
+  
 ];
 
 export function Header() {
