@@ -9,6 +9,8 @@ export function CartSidebar() {
   const [showOptions, setShowOptions] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [selectedMaterial, setSelectedMaterial] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedLength, setSelectedLength] = useState<number | undefined>(undefined);
     useEffect(() => {
     const handleOpenCart = () => {
       toggleCart();
@@ -213,13 +215,55 @@ export function CartSidebar() {
       </div>
       )}
 
+      {selectedItem.product.sizes && (
+        <div className="mb-4">
+        <p className="text-sm font-medium mb-2">Talla</p>
+        <div className="flex gap-2 flex-wrap">
+        {selectedItem.product.sizes.map((size: any) => (
+        <button
+        key={size}
+        onClick={() => setSelectedSize(size)}
+        className={`px-3 py-1 rounded-full border text-sm
+        ${selectedSize === size 
+        ? "bg-[#5b4c9f] text-white border-[#5b4c9f]" 
+        : "bg-white border-gray-300"}
+        `}
+        >
+        {size}
+        </button>
+        ))}
+        </div>
+        </div>
+        )}
+
+        {selectedItem.product.lengths && (
+          <div className="mb-4">
+          <p className="text-sm font-medium mb-2">Largo</p>
+          <div className="flex gap-2 flex-wrap">
+          {selectedItem.product.lengths.map((length: any) => (
+          <button
+          key={length}
+          onClick={() => setSelectedLength(length)}
+          className={`px-3 py-1 rounded-full border text-sm
+          ${selectedLength === length 
+          ? "bg-[#5b4c9f] text-white border-[#5b4c9f]" 
+          : "bg-white border-gray-300"}
+          `}
+          >
+          {length}cm
+          </button>
+          ))}
+          </div>
+          </div>
+          )}
+
       <button
         onClick={() => {
         addToCart(
         selectedItem.product,
         selectedMaterial || selectedItem.selectedMaterial,
-        selectedItem.selectedSize,
-        selectedItem.selectedLength
+        selectedSize || selectedItem.selectedSize,
+        selectedLength || selectedItem.selectedLength
         );
         setShowOptions(false);
         }}
