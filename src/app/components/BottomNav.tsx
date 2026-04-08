@@ -4,11 +4,17 @@ import { useApp } from "../context/AppContext";
 
 export default function BottomNav() {
 const location = useLocation();
-const { cart } = useApp();
+const { cart, currentUser} = useApp();
+const isAdmin = currentUser?.isAdmin;
 
 const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
-const navItems = [
+const navItems = isAdmin
+? [
+    { name: "Inicio", icon: Home, path: "/admin" },
+    { name: "Perfil", icon: User, path: "/perfil" },
+]
+: [
     { name: "Inicio", icon: Home, path: "/" },
     { name: "Perfil", icon: User, path: "/perfil" },
     { name: "Carrito", icon: ShoppingCart, path: "/checkout" },

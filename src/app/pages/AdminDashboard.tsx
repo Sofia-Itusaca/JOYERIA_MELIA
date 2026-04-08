@@ -92,22 +92,23 @@ export function AdminDashboard() {
             </Button>
           </div>
         </div>
+        
 
         {/* Stats Cards */}
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-lg p-6 shadow-sm">
+        <div className="grid grid-cols-4 md:grid-cols-4 gap-3 mb-8">
+          <div className="bg-white rounded-lg p-3 md:p-6 shadow-sm">
             <p className="text-sm text-gray-600 mb-1">Total Productos</p>
             <p className="text-3xl font-bold text-[#1a1f3a]">{totalProducts}</p>
           </div>
-          <div className="bg-white rounded-lg p-6 shadow-sm">
+          <div className="bg-white rounded-lg p-3 md:p-6 shadow-sm">
             <p className="text-sm text-gray-600 mb-1">Productos Activos</p>
             <p className="text-3xl font-bold text-green-600">{activeProducts}</p>
           </div>
-          <div className="bg-white rounded-lg p-6 shadow-sm">
+          <div className="bg-white rounded-lg p-3 md:p-6 shadow-sm">
             <p className="text-sm text-gray-600 mb-1">Total Vendidos</p>
             <p className="text-3xl font-bold text-[#5b4c9f]">{totalSold}</p>
           </div>
-          <div className="bg-white rounded-lg p-6 shadow-sm">
+          <div className="bg-white rounded-lg p-3 md:p-6 shadow-sm">
             <p className="text-sm text-gray-600 mb-1">Valor Inventario</p>
             <p className="text-3xl font-bold text-[#1a1f3a]">
               ${totalInventoryValue.toLocaleString()}
