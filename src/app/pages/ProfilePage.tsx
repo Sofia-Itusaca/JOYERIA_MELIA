@@ -224,9 +224,17 @@ export function ProfilePage() {
 
           <TabsContent value="address">
             <Card>
-              <CardHeader>
+              <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Dirección de Envío</CardTitle>
-              </CardHeader>
+
+                <Button
+                className="bg-[#5b4c9f] hover:bg-[#4a3d85]"
+                onClick={() => setShowEdit(true)}
+                >
+                Editar
+                </Button>
+
+                </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   <div>
