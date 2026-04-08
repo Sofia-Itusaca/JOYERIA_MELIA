@@ -98,7 +98,7 @@ export function CheckoutPage() {
                 </Button>
 
                 </div>
-                </div>
+                
 
 
               <div className="space-y-4 mb-6">
@@ -182,7 +182,7 @@ export function CheckoutPage() {
                 >
                   Confirmar Pedido
                 </Button>
-
+                </div>
                 {showConfirmData && (
                 <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
                 <div className="bg-white rounded-lg p-6 w-[90%] max-w-md">
