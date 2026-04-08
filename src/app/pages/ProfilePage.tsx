@@ -9,10 +9,12 @@ import { mockOrders } from '../data/mock-data';
 import { Badge } from '../components/ui/badge';
 import { useState } from 'react';
 import { Input } from '../components/ui/input';
+import { useLocation } from "react-router-dom";
 
 export function ProfilePage() {
   const { currentUser, logout, updateUser } = useApp();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (!currentUser) {
@@ -65,7 +67,9 @@ export function ProfilePage() {
     }
   };
 
-    const [showEdit, setShowEdit] = useState(false);
+    const [showEdit, setShowEdit] = useState(
+  location.search.includes("edit=true")
+  );
 
     const [formData, setFormData] = useState({
       name: currentUser.name,

@@ -11,13 +11,6 @@ export function CheckoutPage() {
   const { currentUser, cart, clearCart } = useApp();
   const navigate = useNavigate();
   
-  const [formData, setFormData] = useState({
-  name: '',
-  phone: '',
-  address: '',
-  email: ''
-  });
-
   const subtotal = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
   const shipping = subtotal > 5000 ? 0 : 200;
   const total = subtotal + shipping;
@@ -25,16 +18,13 @@ export function CheckoutPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.name || !formData.phone || !formData.address) {
-      toast.error('Por favor completa todos los campos');
-      return;
-    }
-
     // Simulate order creation
     toast.success('¡Pedido realizado con éxito!');
     clearCart();
     navigate('/');
   };
+
+  const [showConfirmData, setShowConfirmData] = useState(false);
 
   if (cart.length === 0) {
     return (
@@ -65,61 +55,6 @@ export function CheckoutPage() {
         </Button>
 
         <h1 className="text-2xl md:text-3xl font-bold text-[#1a1f3a] mb-4">Finalizar Compra</h1>
-
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Order Form */}
-          <div className="space-y-6">
-            <div className="bg-white rounded-lg p-6 shadow-sm">
-              <h2 className="text-xl font-semibold text-[#1a1f3a] mb-6">
-                Información de Envío
-              </h2>
-              
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <Label htmlFor="name">Nombre completo *</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Tu nombre"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="tu@email.com"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="phone">Teléfono *</Label>
-                  <Input
-                    id="phone"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="+34 600 000 000"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="address">Dirección de envío *</Label>
-                  <Input
-                    id="address"
-                    value={formData.address}
-                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                    placeholder="Calle, número, ciudad, código postal"
-                    required
-                  />
-                </div>
-              </form>
-            </div>
 
             <div className="bg-white rounded-lg p-6 shadow-sm">
               <h2 className="text-xl font-semibold text-[#1a1f3a] mb-6 flex items-center">
@@ -236,11 +171,48 @@ export function CheckoutPage() {
                 </div>
 
                 <Button
-                  onClick={handleSubmit}
+                onClick={() => setShowConfirmData(true)}
                   className="w-full h-12 bg-[#5b4c9f] hover:bg-[#4a3d85] text-white"
                 >
                   Confirmar Pedido
                 </Button>
+
+                {showConfirmData && (
+                <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+                <div className="bg-white rounded-lg p-6 w-[90%] max-w-md">
+
+                <h2 className="text-lg font-semibold mb-4">
+                Confirmar datos de envío
+                </h2>
+
+                <div className="space-y-2 mb-6">
+                <p><strong>Nombre:</strong> {currentUser?.name}</p>
+                <p><strong>Teléfono:</strong> {currentUser?.phone}</p>
+                <p><strong>Dirección:</strong> {currentUser?.address}</p>
+                </div>
+
+                <div className="flex gap-3">
+
+                <Button
+                className="flex-1 bg-[#5b4c9f]"
+                onClick={handleSubmit}
+                >
+                Confirmar datos
+                </Button>
+
+                <Button
+                variant="outline"
+                onClick={() => navigate('/perfil?edit=true')}
+                >
+                Editar
+                </Button>
+
+                </div>
+
+                </div>
+                </div>
+                )}
+
               </div>
 
               <div className="mt-6 p-4 bg-[#f5f5f7] rounded-lg">
@@ -251,7 +223,5 @@ export function CheckoutPage() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 }
