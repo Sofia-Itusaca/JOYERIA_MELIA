@@ -98,14 +98,6 @@ export function ProfilePage() {
               <User className="w-4 h-4 mr-2" />
               Información
             </TabsTrigger>
-            <TabsTrigger value="orders">
-              <Package className="w-4 h-4 mr-2" />
-              Mis Pedidos
-            </TabsTrigger>
-            <TabsTrigger value="address">
-              <MapPin className="w-4 h-4 mr-2" />
-              Dirección
-            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="info">
