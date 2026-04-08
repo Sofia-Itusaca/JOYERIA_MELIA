@@ -123,6 +123,7 @@ export function CartSidebar() {
                           onClick={(e) => {
                             e.stopPropagation();
                             setSelectedItem(item);
+                            setSelectedMaterial(item.selectedMaterial);
                             setShowOptions(true);
                           }}
                         >
