@@ -77,7 +77,7 @@ export function CheckoutPage() {
 
           {/* Order Summary */}
           <div>
-            <div className="bg-white rounded-lg p-6 shadow-sm sticky top-24">
+            <div className="max-w-6xl mx-auto px-4 py-3">
               <h2 className="text-xl font-semibold text-[#1a1f3a] mb-6">
                 Resumen del Pedido
               </h2>
