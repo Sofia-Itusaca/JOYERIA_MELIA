@@ -94,10 +94,26 @@ export function ProfilePage() {
 
         <Tabs defaultValue="info" className="space-y-6">
           <TabsList className="bg-white">
+            
             <TabsTrigger value="info">
               <User className="w-4 h-4 mr-2" />
               Información
             </TabsTrigger>
+
+            {!currentUser?.isAdmin && (
+              <>
+                <TabsTrigger value="orders">
+                  <Package className="w-4 h-4 mr-2" />
+                  Mis Pedidos
+                </TabsTrigger>
+
+                <TabsTrigger value="address">
+                  <MapPin className="w-4 h-4 mr-2" />
+                  Dirección
+                </TabsTrigger>
+              </>
+            )}
+
           </TabsList>
 
           <TabsContent value="info">
