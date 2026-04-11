@@ -89,24 +89,26 @@ export function CatalogPage() {
   }, [selectedCategory, selectedGender, selectedMaterial, searchQuery]);
 
   const handleAddToCart = (product: Product) => {
-      const hasMaterial = product.materials.length > 1;
-      const hasSize = product.sizes && product.sizes.length > 0;
-      const hasLength = product.lengths && product.lengths.length > 0;
 
-      // Si NO tiene opciones → añadir directo
-      if (!hasMaterial && !hasSize && !hasLength) {
-        addToCart(product, product.materials[0].type);
-        return;
-      }
+    const hasMaterial = product.materials?.length > 1;
+    const hasSize = (product.sizes?.length ?? 0) > 0;
+    const hasLength = (product.lengths?.length ?? 0) > 0;
 
-      // Si tiene opciones → abrir selector
-      setSelectedProduct(product);
-      setShowCartOptions(true);
+    // Si NO tiene opciones → añadir directo
+    if (!hasMaterial && !hasSize && !hasLength) {
+      addToCart(product, product.materials[0].type);
+      return;
+    }
 
-      setSelectedCartMaterial(product.materials[0]?.type || "");
-      setSelectedSize(product.sizes?.[0] || "");
-      setSelectedLength(product.lengths?.[0]);
-    };
+    // Reset opciones
+    setSelectedCartMaterial(product.materials?.[0]?.type || "");
+    setSelectedSize(product.sizes?.[0] || "");
+    setSelectedLength(product.lengths?.[0]);
+
+    // Abrir modal
+    setSelectedProduct(product);
+    setShowCartOptions(true);
+  };
 
   return (
     <div className="min-h-screen bg-[#f5f5f7] overflow-x-hidden w-full">
@@ -437,11 +439,11 @@ export function CatalogPage() {
         )}
 
         {/* Talla */}
-        {selectedProduct.sizes && (
+        {(selectedProduct.sizes?.length ?? 0) > 0 && (
           <div className="mb-4">
             <p className="text-sm font-medium mb-2">Talla</p>
             <div className="flex gap-2 flex-wrap">
-              {selectedProduct.sizes.map(size => (
+              {selectedProduct.sizes?.map(size => (
                 <button
                   key={size}
                   onClick={() => setSelectedSize(size)}
@@ -459,11 +461,11 @@ export function CatalogPage() {
         )}
 
         {/* Largo */}
-        {selectedProduct.lengths && (
+        {(selectedProduct.lengths?.length ?? 0) > 0 && (
           <div className="mb-4">
             <p className="text-sm font-medium mb-2">Largo</p>
             <div className="flex gap-2 flex-wrap">
-              {selectedProduct.lengths.map(length => (
+              {selectedProduct.lengths?.map(length => (
                 <button
                   key={length}
                   onClick={() => setSelectedLength(length)}
