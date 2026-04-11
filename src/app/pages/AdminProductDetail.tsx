@@ -191,9 +191,41 @@ export function AdminProductDetail() {
 
               {isEditing && (
                 <div className="mt-4">
-                  <Button variant="outline" className="w-full">
-                    Cambiar imágenes
-                  </Button>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                    id="uploadImages"
+                    onChange={(e) => {
+                      const files = e.target.files;
+                      if (!files) return;
+
+                      const newImages = Array.from(files).map(file =>
+                        URL.createObjectURL(file)
+                      );
+
+                      const updatedMaterials = productData.materials.map((m, index) =>
+                        index === 0
+                          ? { ...m, images: [...m.images, ...newImages] }
+                          : m
+                      );
+
+                      setProductData({
+                        ...productData,
+                        materials: updatedMaterials
+                      });
+                    }}
+                  />
+
+                  <label htmlFor="uploadImages">
+                    <Button
+                      variant="outline"
+                      className="w-full cursor-pointer"
+                    >
+                      Cambiar imágenes
+                    </Button>
+                  </label>
                 </div>
               )}
             </div>
