@@ -54,7 +54,7 @@ export function Header() {
     <header className="sticky top-0 z-50 bg-white border-b border-border shadow-sm w-full overflow-x-hidden">
       <div className="w-full max-w-7xl mx-auto px-3">
         {/* Desktop Header */}
-        <div className="hidden lg:flex items-center justify-between px-8 py-4">
+        <div className="hidden lg:flex items-center justify-between px-8 py-3">
           {/* Logo */}
           <button 
             onClick={handleLogoClick}
@@ -97,11 +97,11 @@ export function Header() {
                 placeholder="Buscar..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-48 pr-10 bg-[#f5f5f7] border-0"
+                className="w-48 pr-10 bg-[#f5f5f7] border-0 rounded-xl shadow-sm"
               />
               <button
                 type="submit"
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-[#1a1f3a] hover:text-[#5b4c9f]"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-[#5b4c9f] hover:text-[#8f7be8]"
               >
                 <Search className="w-4 h-4" />
               </button>
@@ -145,7 +145,7 @@ export function Header() {
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#5b4c9f] to-[#1a1f3a] flex items-center justify-center">
               <span className="text-white font-bold text-sm">JM</span>
             </div>
-            <span className="text-lg font-semibold text-[#1a1f3a]">Joyas Meliá</span>
+            <span className="text-base md:text-lg font-semibold text-[#1a1f3a]">Joyas Meliá</span>
           </button>
 
           {!isAdmin && (
