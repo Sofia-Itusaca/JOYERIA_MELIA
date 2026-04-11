@@ -238,7 +238,7 @@ export function CatalogPage() {
                         onClick={() => navigate(`/producto/${product.id}`)}
                         className="w-full"
                       >
-                        <div className="aspect-square md:aspect-square overflow-hidden bg-[#f5f5f7]">
+                        <div className="aspect-square overflow-hidden rounded-t-2xl">
                           <img
                             src={mainImage}
                             alt={product.name}
