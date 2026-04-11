@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 
+
 const categories = [
   { name: 'Inicio', path: '/' },
   { name: 'Anillos', path: '/catalogo?category=rings' },
