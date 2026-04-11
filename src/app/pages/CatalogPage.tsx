@@ -89,23 +89,23 @@ export function CatalogPage() {
   }, [selectedCategory, selectedGender, selectedMaterial, searchQuery]);
 
   const handleAddToCart = (product: Product) => {
-
       const hasMaterial = product.materials.length > 1;
       const hasSize = product.sizes && product.sizes.length > 0;
       const hasLength = product.lengths && product.lengths.length > 0;
 
-      if (hasMaterial || hasSize || hasLength) {
-        setSelectedProduct(product);
-        setShowCartOptions(true);
-
-        setSelectedCartMaterial(product.materials[0]?.type || "");
-        setSelectedSize(product.sizes?.[0] || "");
-        setSelectedLength(product.lengths?.[0]);
-
+      // Si NO tiene opciones → añadir directo
+      if (!hasMaterial && !hasSize && !hasLength) {
+        addToCart(product, product.materials[0].type);
         return;
       }
 
-      addToCart(product, product.materials[0].type);
+      // Si tiene opciones → abrir selector
+      setSelectedProduct(product);
+      setShowCartOptions(true);
+
+      setSelectedCartMaterial(product.materials[0]?.type || "");
+      setSelectedSize(product.sizes?.[0] || "");
+      setSelectedLength(product.lengths?.[0]);
     };
 
   return (
