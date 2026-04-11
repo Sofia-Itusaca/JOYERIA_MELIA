@@ -98,12 +98,12 @@ if (product.materials.length > 1 && !material) {
   return;
 }
 
-if (product.sizes && !size) {
+if ((product.sizes?.length ?? 0) > 0 && !size) {
   toast.error("Selecciona una talla");
   return;
 }
 
-if (product.lengths && !length) {
+if ((product.lengths?.length ?? 0) > 0 && !length) {
   toast.error("Selecciona un largo");
   return;
 }
@@ -112,8 +112,8 @@ const existingItem = cart.find(
   item => 
     item.productId === product.id &&
     item.selectedMaterial === material &&
-    item.selectedSize === size &&
-    item.selectedLength === length
+    (item.selectedSize || "") === (size || "") &&
+    (item.selectedLength || 0) === (length || 0)
 );
 
 if (existingItem) {
