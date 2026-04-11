@@ -112,7 +112,7 @@ export function CatalogPage() {
 
   return (
     <div className="min-h-screen bg-[#f5f5f7] overflow-x-hidden w-full">
-      <div className="w-full px-2">
+      <div className="w-full px-2 md:pt-6">
         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-4 w-full">
           {/* Filters Sidebar */}
           <aside className="space-y-6 lg:block hidden">
@@ -160,14 +160,14 @@ export function CatalogPage() {
           <div>
             {/* Mobile Filters */}
             <div className="lg:hidden mb-3 space-y-2">
-              <div className="bg-white rounded-lg p-4 shadow-sm">
+              <div className="bg-white rounded-2xl p-3 shadow-sm">
                 <div className="relative">
                   <Input
                     type="text"
                     placeholder="Buscar productos..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pr-10"
+                    className="pr-10 h-9 rounded-xl bg-[#f5f5f7] border-0 shadow-sm"
                   />
                   <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 </div>
