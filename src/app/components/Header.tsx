@@ -54,7 +54,7 @@ export function Header() {
     <header className="sticky top-0 z-50 bg-white border-b border-border shadow-sm w-full overflow-x-hidden">
       <div className="w-full max-w-7xl mx-auto px-3">
         {/* Desktop Header */}
-        <div className="hidden lg:flex items-center justify-between px-8 py-3">
+        <div className="hidden lg:flex items-center justify-between px-8 py-4">
           {/* Logo */}
           <button 
             onClick={handleLogoClick}
@@ -97,7 +97,7 @@ export function Header() {
                 placeholder="Buscar..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-48 pr-10 bg-[#f5f5f7] border-0 rounded-xl shadow-sm"
+                className="w-48 h-9 md:h-10 pr-10 bg-[#f5f5f7] border-0 rounded-xl"
               />
               <button
                 type="submit"
