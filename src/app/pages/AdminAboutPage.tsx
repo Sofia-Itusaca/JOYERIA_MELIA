@@ -27,6 +27,10 @@ export function AdminAboutPage() {
     twitter: storeInfo.socialMedia.twitter || ''
   });
 
+  const [storeImages, setStoreImages] = useState<string[]>(
+  storeInfo.storeImages
+  );
+
   useEffect(() => {
     if (!currentUser?.isAdmin) {
       navigate('/login');
@@ -48,6 +52,7 @@ export function AdminAboutPage() {
       phone: formData.phone,
       whatsapp: formData.whatsapp,
       schedule: formData.schedule,
+      storeImages: storeImages,
       socialMedia: {
         facebook: formData.facebook,
         instagram: formData.instagram,
@@ -75,6 +80,25 @@ export function AdminAboutPage() {
       twitter: storeInfo.socialMedia.twitter || ''
     });
     setIsEditing(false);
+  };
+
+  const handleImageChange = (
+    index: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const updated = [...storeImages];
+    updated[index] = URL.createObjectURL(file);
+
+    setStoreImages(updated);
+  };
+
+  const removeImage = (index: number) => {
+  const updated = [...storeImages];
+    updated.splice(index, 1);
+    setStoreImages(updated);
   };
 
   return (
@@ -195,18 +219,45 @@ export function AdminAboutPage() {
             </h2>
             
             <div className="grid md:grid-cols-3 gap-4">
-              {storeInfo.storeImages.map((image, index) => (
-                <div key={index} className="space-y-2">
+              {storeImages.map((image, index) => (
+                <div key={index} className="space-y-2 relative">
+
                   <img
                     src={image}
-                    alt={`Tienda ${index + 1}`}
-                    className="w-full aspect-video object-cover rounded-lg"
+                    className="w-full h-48 object-cover rounded-lg"
                   />
+
                   {isEditing && (
-                    <Button variant="outline" size="sm" className="w-full">
-                      Cambiar imagen {index + 1}
-                    </Button>
+                    <>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        id={`store-${index}`}
+                        className="hidden"
+                        onChange={(e) => handleImageChange(index, e)}
+                      />
+
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full"
+                        onClick={() =>
+                          document.getElementById(`store-${index}`)?.click()
+                        }
+                      >
+                        Cambiar imagen {index + 1}
+                      </Button>
+
+                      <button
+                        type="button"
+                        onClick={() => removeImage(index)}
+                        className="absolute top-2 right-2 bg-white rounded-full w-7 h-7 shadow"
+                      >
+                        ✕
+                      </button>
+                    </>
                   )}
+
                 </div>
               ))}
             </div>
