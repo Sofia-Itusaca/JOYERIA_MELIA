@@ -60,10 +60,14 @@ export function Header() {
             onClick={handleLogoClick}
             className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
           >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#5b4c9f] to-[#1a1f3a] flex items-center justify-center">
-              <span className="text-white font-bold text-lg">JM</span>
-            </div>
-            <span className="text-2xl font-semibold text-[#1a1f3a]">Joyas Meliá</span>
+            <img
+              src="/logo.png"
+              alt="Joyas Meliá"
+              className="w-10 h-10 object-contain"
+            />
+            <span className="text-2xl font-semibold tracking-wide text-[#1a1f3a]">
+              Joyas Meliá
+            </span>
           </button>
 
           {/* Navigation */}
@@ -139,14 +143,19 @@ export function Header() {
         {/* Mobile Header */}
         <div className="lg:hidden flex items-center justify-between px-4 py-3">
           <button 
-            onClick={handleLogoClick}
-            className="flex items-center space-x-2"
-          >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#5b4c9f] to-[#1a1f3a] flex items-center justify-center">
-              <span className="text-white font-bold text-sm">JM</span>
-            </div>
-            <span className="text-base md:text-lg font-semibold text-[#1a1f3a]">Joyas Meliá</span>
-          </button>
+          onClick={handleLogoClick}
+          className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
+        >
+          <img
+            src="/logo.png"
+            alt="Joyas Meliá"
+            className="w-9 h-9 md:w-10 md:h-10 object-contain"
+          />
+
+          <span className="text-2xl font-semibold tracking-wide text-[#1a1f3a]">
+            Joyas Meliá
+          </span>
+        </button>
 
           {!isAdmin && (
           <div className="flex items-center space-x-2">
