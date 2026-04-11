@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { mockProducts } from '../data/mock-data';
 import { Button } from '../components/ui/button';
@@ -17,6 +17,13 @@ export function ProductPage() {
   const [selectedSize, setSelectedSize] = useState(product?.sizes?.[0] || '');
   const [selectedLength, setSelectedLength] = useState(product?.lengths?.[0] || 0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+  setSelectedMaterial(product?.materials?.[0]?.type || '');
+  setSelectedSize(product?.sizes?.[0] || '');
+  setSelectedLength(product?.lengths?.[0] || 0);
+  setCurrentImageIndex(0);
+}, [product?.id]);
 
   const touchStart = useRef(0);
   const touchEnd = useRef(0);
