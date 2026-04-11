@@ -7,9 +7,9 @@ export interface Product {
   price: number;
   category: 'rings' | 'necklaces' | 'bracelets' | 'earrings' | 'watches' | 'for-him' | 'babys';
   materials: Array<{
-    type: 'gold' | 'silver' | 'stainless-steel' | 'copper' | 'bronze' | 'rose-gold' | 'gems';
-    images: string[];
-  }>;
+  type: string;
+  images: string[];
+}>;
   sizes?: string[]; // For rings
   lengths?: number[]; // For necklaces (in cm)
   stock: number;
