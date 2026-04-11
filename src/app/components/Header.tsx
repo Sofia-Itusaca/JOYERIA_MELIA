@@ -63,9 +63,9 @@ export function Header() {
             <img
               src="/logo.png"
               alt="Joyas Meliá"
-              className="w-10 h-10 object-contain"
+              className="w-9 h-9 object-contain"
             />
-            <span className="text-2xl font-semibold tracking-wide text-[#1a1f3a]">
+            <span className="text-2xl font-[Nicholas] tracking-[0.5px] text-[#1a1f3a]">
               Joyas Meliá
             </span>
           </button>
@@ -152,7 +152,7 @@ export function Header() {
             className="w-9 h-9 md:w-10 md:h-10 object-contain"
           />
 
-          <span className="text-2xl font-semibold tracking-wide text-[#1a1f3a]">
+          <span className="text-xl font-[Nicholas] tracking-wide text-[#1a1f3a]">
             Joyas Meliá
           </span>
         </button>
