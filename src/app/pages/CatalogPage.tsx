@@ -167,7 +167,22 @@ export function CatalogPage() {
                       placeholder="Buscar productos..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pr-10 h-11 rounded-2xl bg-gradient-to-r from-[#f5f3ff] to-[#ede9fe] border border-white/60 shadow-md backdrop-blur-md focus:ring-2 focus:ring-[#5b4c9f]/20 focus:border-[#5b4c9f]/40"
+                      className="
+                      pr-10
+                      h-11
+                      rounded-2xl
+                      bg-gradient-to-r 
+                      from-[#f5f3ff] 
+                      to-[#ede9fe]
+                      border
+                      border-white/40
+                      backdrop-blur-md
+                      shadow-md
+                      mt-2
+                      focus:ring-2
+                      focus:ring-[#5b4c9f]/20
+                      focus:border-[#5b4c9f]/40
+                      "
                     />
                     <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5b4c9f]" />
                   </div>
