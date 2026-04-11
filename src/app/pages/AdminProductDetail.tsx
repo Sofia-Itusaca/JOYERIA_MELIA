@@ -1,75 +1,64 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useApp } from '../context/AppContext';
-import { mockProducts } from '../data/mock-data';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Label } from '../components/ui/label';
-import { Textarea } from '../components/ui/textarea';
-import { ArrowLeft, Save, Power, PowerOff } from 'lucide-react';
-import { toast } from 'sonner';
-import { Badge } from '../components/ui/badge';
 
-export function AdminProductDetail() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const { currentUser } = useApp();
+import React, { useState } from "react";
+import { Product } from "../types";
 
-  const product = mockProducts.find(p => String(p.id) === id);
-  const [productData, setProductData] = useState(product!);
+export default function AdminProductDetail() {
 
   const [isEditing, setIsEditing] = useState(false);
-  const [showAddSize, setShowAddSize] = useState(false);
-  const [newSize, setNewSize] = useState('');
   const [showAddMaterial, setShowAddMaterial] = useState(false);
-  const [newMaterial, setNewMaterial] = useState('');
+  const [showAddSize, setShowAddSize] = useState(false);
 
-  const [formData, setFormData] = useState({
-    name: product?.name || '',
-    description: product?.description || '',
-    price: product?.price || 0,
-    stock: product?.stock || 0,
-    active: product?.active ?? true
+  const [newMaterial, setNewMaterial] = useState("");
+  const [newSize, setNewSize] = useState("");
+
+  const [productData, setProductData] = useState<Product>({
+    id: "1",
+    name: "Anillo Oro",
+    description: "Anillo elegante",
+    price: 150,
+    category: "rings",
+    materials: [
+      { type: "gold", images: [] },
+      { type: "silver", images: [] }
+    ],
+    sizes: ["5","6","7","8","9","10"],
+    stock: 10,
+    active: true,
+    soldCount: 0,
+    reviews: [],
+    targetGender: "ella"
   });
 
-  useEffect(() => {
-    if (!currentUser?.isAdmin) {
-      navigate('/login');
-    }
-  }, [currentUser, navigate]);
-
-  if (!currentUser?.isAdmin) return null;
-
-  if (!productData) {
-    return (
-      <div className="min-h-screen bg-[#f5f5f7] flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-[#1a1f3a] mb-4">
-            Producto no encontrado
-          </h2>
-          <Button onClick={() => navigate('/admin')}>
-            Volver al panel
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  const handleSave = () => {
-    toast.success('Producto actualizado correctamente');
-    setIsEditing(false);
+  const removeMaterial = (material: string) => {
+    setProductData({
+      ...productData,
+      materials: productData.materials.filter(
+        (m) => m.type !== material
+      )
+    });
   };
 
-  const handleToggleActive = () => {
-    const newStatus = !formData.active;
-    setFormData({ ...formData, active: newStatus });
-    toast.success(`Producto ${newStatus ? 'activado' : 'desactivado'}`);
+  const addMaterial = () => {
+    if (!newMaterial) return;
+
+    setProductData({
+      ...productData,
+      materials: [
+        ...productData.materials,
+        { type: newMaterial, images: [] }
+      ]
+    });
+
+    setNewMaterial("");
+    setShowAddMaterial(false);
   };
 
   const removeSize = (size: string) => {
     setProductData({
       ...productData,
-      sizes: productData.sizes?.filter(s => s !== size)
+      sizes: productData.sizes?.filter(
+        (s) => s !== size
+      )
     });
   };
 
@@ -81,212 +70,224 @@ export function AdminProductDetail() {
       sizes: [...(productData.sizes || []), newSize]
     });
 
-    setNewSize('');
+    setNewSize("");
     setShowAddSize(false);
-  };
-
-  const removeMaterial = (material: string) => {
-    setProductData({
-      ...productData,
-      materials: productData.materials?.filter(
-        m => m.type !== material
-      )
-    });
-  };
-
-  const addMaterial = () => {
-    if (!newMaterial) return;
-
-    setProductData({
-      ...productData,
-      materials: [
-        ...(productData.materials || []),
-        { type: newMaterial, images: [] }
-      ]
-    });
-
-    setNewMaterial('');
-    setShowAddMaterial(false);
   };
 
   return (
     <div className="min-h-screen bg-[#f5f5f7]">
+
       <div className="max-w-[1400px] mx-auto px-4 py-8">
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/admin')}
-          className="mb-6"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Volver al panel
-        </Button>
 
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
-            <h1 className="text-3xl font-bold text-[#1a1f3a]">
-              Detalle del Producto
-            </h1>
+        <h1 className="text-3xl font-bold mb-6">
+          Detalle del Producto
+        </h1>
 
-            <Badge
-              className={
-                formData.active
-                  ? 'bg-green-100 text-green-800'
-                  : 'bg-gray-100 text-gray-800'
-              }
-            >
-              {formData.active ? 'Activo' : 'Inactivo'}
-            </Badge>
+        <div className="bg-white rounded-lg p-6 shadow-sm mb-6">
+
+          <h2 className="text-xl font-semibold mb-4">
+            Información General
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <div>
+              <label>Nombre</label>
+              <input
+                className="w-full border p-2 rounded"
+                value={productData.name}
+                onChange={(e) =>
+                  setProductData({
+                    ...productData,
+                    name: e.target.value
+                  })
+                }
+                disabled={!isEditing}
+              />
+            </div>
+
+            <div>
+              <label>Precio</label>
+              <input
+                type="number"
+                className="w-full border p-2 rounded"
+                value={productData.price}
+                onChange={(e) =>
+                  setProductData({
+                    ...productData,
+                    price: Number(e.target.value)
+                  })
+                }
+                disabled={!isEditing}
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <label>Descripción</label>
+              <textarea
+                className="w-full border p-2 rounded"
+                value={productData.description}
+                onChange={(e) =>
+                  setProductData({
+                    ...productData,
+                    description: e.target.value
+                  })
+                }
+                disabled={!isEditing}
+              />
+            </div>
+
           </div>
 
-          <div className="flex gap-3">
-            <Button
-              variant="outline"
-              onClick={handleToggleActive}
-            >
-              {formData.active ? (
-                <>
-                  <PowerOff className="w-4 h-4 mr-2" />
-                  Desactivar
-                </>
-              ) : (
-                <>
-                  <Power className="w-4 h-4 mr-2" />
-                  Activar
-                </>
-              )}
-            </Button>
+        </div>
 
-            {isEditing ? (
-              <Button onClick={handleSave}>
-                <Save className="w-4 h-4 mr-2" />
-                Guardar
-              </Button>
-            ) : (
-              <Button onClick={() => setIsEditing(true)}>
-                Editar
-              </Button>
+        <div className="bg-white rounded-lg p-6 shadow-sm mb-6">
+
+          <h2 className="text-xl font-semibold mb-4">
+            Materiales Disponibles
+          </h2>
+
+          <div className="flex flex-wrap gap-2">
+
+            {productData.materials.map((material) => (
+              <div
+                key={material.type}
+                className="bg-gray-100 px-3 py-1 rounded flex items-center gap-2"
+              >
+                {material.type}
+
+                {isEditing && (
+                  <button
+                    onClick={() => removeMaterial(material.type)}
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+            ))}
+
+            {isEditing && (
+              <button
+                className="bg-gray-200 px-3 py-1 rounded"
+                onClick={() => setShowAddMaterial(true)}
+              >
+                +
+              </button>
             )}
+
           </div>
+
+          {showAddMaterial && (
+            <div className="mt-4 flex gap-2">
+              <input
+                className="border p-2 rounded"
+                placeholder="Nuevo material"
+                value={newMaterial}
+                onChange={(e) =>
+                  setNewMaterial(e.target.value)
+                }
+              />
+
+              <button
+                className="bg-green-500 text-white px-4 py-2 rounded"
+                onClick={addMaterial}
+              >
+                Añadir
+              </button>
+
+              <button
+                className="bg-gray-300 px-4 py-2 rounded"
+                onClick={() =>
+                  setShowAddMaterial(false)
+                }
+              >
+                Cancelar
+              </button>
+            </div>
+          )}
+
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          <div className="space-y-6">
-            {/* Materials */}
-            <div className="bg-white rounded-lg p-6 shadow-sm">
-              <h2 className="text-xl mb-4">
-                Materiales Disponibles
-              </h2>
+        <div className="bg-white rounded-lg p-6 shadow-sm">
 
-              <div className="flex flex-wrap gap-2">
-                {productData.materials.map(material => (
-                  <div
-                    key={material.type}
-                    className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded"
-                  >
-                    {material.type}
+          <h2 className="text-xl font-semibold mb-4">
+            Tallas Disponibles
+          </h2>
 
-                    {isEditing && (
-                      <button
-                        onClick={() =>
-                          removeMaterial(material.type)
-                        }
-                      >
-                        ✕
-                      </button>
-                    )}
-                  </div>
-                ))}
+          <div className="flex flex-wrap gap-2">
+
+            {productData.sizes?.map((size) => (
+              <div
+                key={size}
+                className="bg-gray-100 px-3 py-1 rounded flex items-center gap-2"
+              >
+                {size}
 
                 {isEditing && (
                   <button
-                    onClick={() => setShowAddMaterial(true)}
+                    onClick={() => removeSize(size)}
                   >
-                    +
+                    ✕
                   </button>
                 )}
               </div>
+            ))}
 
-              {showAddMaterial && (
-                <div className="flex gap-2 mt-3">
-                  <Input
-                    value={newMaterial}
-                    onChange={e =>
-                      setNewMaterial(e.target.value)
-                    }
-                  />
+            {isEditing && (
+              <button
+                className="bg-gray-200 px-3 py-1 rounded"
+                onClick={() => setShowAddSize(true)}
+              >
+                +
+              </button>
+            )}
 
-                  <Button onClick={addMaterial}>
-                    Añadir
-                  </Button>
-
-                  <Button
-                    onClick={() =>
-                      setShowAddMaterial(false)
-                    }
-                  >
-                    X
-                  </Button>
-                </div>
-              )}
-            </div>
-
-            {/* Sizes */}
-            <div className="bg-white rounded-lg p-6 shadow-sm">
-              <h2 className="text-xl mb-4">
-                Tallas Disponibles
-              </h2>
-
-              <div className="flex flex-wrap gap-2">
-                {productData.sizes?.map(size => (
-                  <div
-                    key={size}
-                    className="flex gap-2 bg-gray-100 px-3 py-1 rounded"
-                  >
-                    {size}
-
-                    {isEditing && (
-                      <button
-                        onClick={() => removeSize(size)}
-                      >
-                        ✕
-                      </button>
-                    )}
-                  </div>
-                ))}
-
-                {isEditing && (
-                  <button
-                    onClick={() => setShowAddSize(true)}
-                  >
-                    +
-                  </button>
-                )}
-              </div>
-
-              {showAddSize && (
-                <div className="flex gap-2 mt-3">
-                  <Input
-                    value={newSize}
-                    onChange={e =>
-                      setNewSize(e.target.value)
-                    }
-                  />
-
-                  <Button onClick={addSize}>
-                    Añadir
-                  </Button>
-
-                  <Button
-                    onClick={() => setShowAddSize(false)}
-                  >
-                    X
-                  </Button>
-                </div>
-              )}
-            </div>
           </div>
+
+          {showAddSize && (
+            <div className="mt-4 flex gap-2">
+              <input
+                className="border p-2 rounded"
+                placeholder="Nueva talla"
+                value={newSize}
+                onChange={(e) =>
+                  setNewSize(e.target.value)
+                }
+              />
+
+              <button
+                className="bg-green-500 text-white px-4 py-2 rounded"
+                onClick={addSize}
+              >
+                Añadir
+              </button>
+
+              <button
+                className="bg-gray-300 px-4 py-2 rounded"
+                onClick={() =>
+                  setShowAddSize(false)
+                }
+              >
+                Cancelar
+              </button>
+            </div>
+          )}
+
         </div>
+
+        <div className="mt-6">
+
+          <button
+            className="bg-purple-600 text-white px-6 py-2 rounded"
+            onClick={() => setIsEditing(!isEditing)}
+          >
+            {isEditing ? "Guardar" : "Editar"}
+          </button>
+
+        </div>
+
       </div>
+
     </div>
   );
 }
