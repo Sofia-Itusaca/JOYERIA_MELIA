@@ -16,6 +16,7 @@ export function AdminProductDetail() {
   const { currentUser } = useApp();
   
   const product = mockProducts.find(p => String(p.id) === id);  
+  const [productData, setProductData] = useState(product!);
   
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -36,8 +37,8 @@ export function AdminProductDetail() {
     return null;
   }
 
-  if (!product) {
-    return (
+  if (!productData) {
+      return (
       <div className="min-h-screen bg-[#f5f5f7] flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-[#1a1f3a] mb-4">Producto no encontrado</h2>
@@ -55,10 +56,25 @@ export function AdminProductDetail() {
   };
 
   const handleToggleActive = () => {
+    
     const newStatus = !formData.active;
     setFormData({ ...formData, active: newStatus });
     toast.success(`Producto ${newStatus ? 'activado' : 'desactivado'}`);
   };
+
+    const removeSize = (size: string) => {
+      setProductData({
+        ...productData,
+        sizes: productData.sizes?.filter(s => s !== size)
+      });
+    };
+
+    const removeMaterial = (material: string) => {
+      setProductData({
+        ...productData,
+        materials: productData.materials?.filter(m => m.type !== material)
+      });
+    };
 
   return (
     <div className="min-h-screen bg-[#f5f5f7]">
@@ -124,7 +140,7 @@ export function AdminProductDetail() {
             <div className="bg-white rounded-lg p-6 shadow-sm">
               <h2 className="text-xl font-semibold text-[#1a1f3a] mb-4">Imágenes del Producto</h2>
               
-              {product.materials.map((material) => (
+              {productData.materials.map((material) => (
                 <div key={material.type} className="mb-6">
                   <h3 className="text-sm font-semibold text-[#1a1f3a] mb-3 capitalize">
                     Material: {material.type.replace('-', ' ')}
@@ -134,7 +150,7 @@ export function AdminProductDetail() {
                       <div key={index} className="aspect-square overflow-hidden rounded-lg bg-[#f5f5f7]">
                         <img
                           src={image}
-                          alt={`${product.name} - ${material.type} ${index + 1}`}
+                          alt={`${productData.name} - ${material.type} ${index + 1}`}
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -156,45 +172,57 @@ export function AdminProductDetail() {
             <div className="bg-white rounded-lg p-6 shadow-sm">
               <h2 className="text-xl font-semibold text-[#1a1f3a] mb-4">Materiales Disponibles</h2>
               <div className="flex flex-wrap gap-2">
-                {product.materials.map((material) => (
-                  <Badge key={material.type} className="bg-[#5b4c9f]/10 text-[#5b4c9f] capitalize">
-                    {material.type.replace('-', ' ')}
-                  </Badge>
+                {productData.materials.map((material) => (
+                  <div
+                    key={material.type}
+                    className="flex items-center gap-2 bg-[#f5f5f7] px-3 py-1 rounded-lg"
+                  >
+                    <span className="capitalize">
+                      {material.type.replace('-', ' ')}
+                    </span>
+
+                    {isEditing && (
+                      <button
+                        onClick={() => removeMaterial(material.type)}
+                        className="hover:bg-gray-300 rounded-full p-0.5"
+                      >
+                        ✕
+                      </button>
+                    )}
+
+                  </div>
                 ))}
               </div>
-              {isEditing && (
-                <Button variant="outline" className="w-full mt-4">
-                  Editar materiales
-                </Button>
-              )}
-            </div>
+              </div>
 
             {/* Sizes / Lengths */}
-            {(product.sizes || product.lengths) && (
-              <div className="bg-white rounded-lg p-6 shadow-sm">
-                <h2 className="text-xl font-semibold text-[#1a1f3a] mb-4">
-                  {product.sizes ? 'Tallas Disponibles' : 'Largos Disponibles'}
-                </h2>
-                <div className="flex flex-wrap gap-2">
-                  {product.sizes?.map((size) => (
-                    <Badge key={size} className="bg-[#f5f5f7] text-[#1a1f3a]">
-                      Talla {size}
-                    </Badge>
-                  ))}
-                  {product.lengths?.map((length) => (
-                    <Badge key={length} className="bg-[#f5f5f7] text-[#1a1f3a]">
-                      {length}cm
-                    </Badge>
-                  ))}
-                </div>
-                {isEditing && (
-                  <Button variant="outline" className="w-full mt-4">
-                    {product.sizes ? 'Editar tallas' : 'Editar largos'}
-                  </Button>
-                )}
+            {(productData.sizes || productData.lengths) && (
+            <div className="bg-white rounded-lg p-6 shadow-sm">
+              <h2 className="text-xl font-semibold text-[#1a1f3a] mb-4">
+                {productData.sizes ? 'Tallas Disponibles' : 'Largos Disponibles'}
+              </h2>
+
+              <div className="flex flex-wrap gap-2">
+                {productData.sizes?.map((size) => (
+                  <div
+                    key={size}
+                    className="flex items-center gap-2 bg-[#f5f5f7] px-3 py-1 rounded-lg"
+                  >
+                    <span>Talla {size}</span>
+
+                    {isEditing && (
+                      <button
+                        onClick={() => removeSize(size)}
+                        className="hover:bg-gray-300 rounded-full p-0.5"
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+                ))}
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Product Info */}
           <div className="space-y-6">
@@ -216,7 +244,7 @@ export function AdminProductDetail() {
                   <Label htmlFor="category">Categoría</Label>
                   <Input
                     id="category"
-                    value={product.category.replace('-', ' ')}
+                    value={productData.category.replace('-', ' ')}
                     disabled
                     className="capitalize"
                   />
@@ -260,7 +288,7 @@ export function AdminProductDetail() {
                 <div>
                   <Label>Para quién</Label>
                   <Input
-                    value={product.targetGender === 'ella' ? 'Ella' : product.targetGender === 'ellos' ? 'Ellos' : 'Babys'}
+                    value={productData.targetGender === 'ella' ? 'Ella' : productData.targetGender === 'ellos' ? 'Ellos' : 'Babys'}
                     disabled
                     className="capitalize"
                   />
@@ -275,29 +303,29 @@ export function AdminProductDetail() {
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <p className="text-sm text-gray-600 mb-1">Veces vendido</p>
-                  <p className="text-3xl font-bold text-[#5b4c9f]">{product.soldCount}</p>
+                  <p className="text-3xl font-bold text-[#5b4c9f]">{productData.soldCount}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 mb-1">Ingresos totales</p>
                   <p className="text-3xl font-bold text-[#1a1f3a]">
-                    ${(product.soldCount * product.price).toLocaleString()}
+                    ${(productData.soldCount * productData.price).toLocaleString()}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 mb-1">Stock actual</p>
-                  <p className={`text-3xl font-bold ${product.stock < 10 ? 'text-red-600' : 'text-green-600'}`}>
-                    {product.stock}
+                  <p className={`text-3xl font-bold ${productData.stock < 10 ? 'text-red-600' : 'text-green-600'}`}>
+                    {productData.stock}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 mb-1">Valor en stock</p>
                   <p className="text-3xl font-bold text-[#1a1f3a]">
-                    ${(product.stock * product.price).toLocaleString()}
+                    ${(productData.stock * productData.price).toLocaleString()}
                   </p>
                 </div>
               </div>
 
-              {product.stock < 10 && (
+              {productData.stock < 10 && (
                 <div className="mt-4 p-3 bg-red-50 rounded-lg">
                   <p className="text-sm text-red-600 font-medium">
                     ⚠️ Stock bajo - Considera reabastecer este producto
@@ -308,6 +336,7 @@ export function AdminProductDetail() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }
