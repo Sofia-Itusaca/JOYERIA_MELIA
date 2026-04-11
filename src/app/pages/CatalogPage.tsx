@@ -179,7 +179,7 @@ export function CatalogPage() {
                     key={category.value}
                     variant={selectedCategory === category.value ? "default" : "outline"}
                     onClick={() => setSelectedCategory(category.value)}
-                    className={`whitespace-nowrap rounded-full px-4 py-1 text-sm border transition-all
+                    className={`whitespace-nowrap rounded-full px-6 py-2 text-base font-medium border transition-all
                       ${
                       selectedCategory === category.value
                       ? "bg-[#5b4c9f] text-white border-[#5b4c9f]"
