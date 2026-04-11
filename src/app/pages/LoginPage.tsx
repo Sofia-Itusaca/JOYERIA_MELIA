@@ -20,7 +20,7 @@ export function LoginPage() {
     
     if (success) {
       toast.success('¡Bienvenido de vuelta!');
-      navigate('/perfil');
+      navigate('/');
     } else {
       toast.error('Email o contraseña incorrectos');
     }
@@ -33,7 +33,7 @@ export function LoginPage() {
       login('admin@joyasmelia.com', 'admin');
     }
     toast.success('¡Sesión iniciada!');
-    navigate(type === 'admin' ? '/admin' : '/perfil');
+    navigate(type === 'admin' ? '/admin' : '/');
   };
 
   return (
