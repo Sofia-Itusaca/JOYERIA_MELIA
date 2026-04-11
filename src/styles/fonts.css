@@ -13,3 +13,8 @@
     font-weight: normal;
     font-style: normal;
 }
+
+body {
+    font-family: "Nicholas", serif;
+    letter-spacing: 0.02em;
+}
