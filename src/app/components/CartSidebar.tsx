@@ -80,7 +80,7 @@ export function CartSidebar() {
 
                 return (
                   <div 
-                    key={`${item.productId}-${item.selectedMaterial}-${item.selectedSize}`}
+                    key={`${item.productId}-${item.selectedMaterial}-${item.selectedSize}-${item.selectedLength}`}
                     className="flex gap-4 pb-4 border-b border-border cursor-pointer hover:bg-gray-50 p-2 rounded-lg"
                     onClick={(e) => {
                       const target = e.target as HTMLElement;
@@ -135,7 +135,14 @@ export function CartSidebar() {
                           variant="ghost"
                           size="sm"
                           className="ml-auto text-red-500 hover:text-red-600 h-7 text-xs"
-                          onClick={() => removeFromCart(item.productId)}
+                          onClick={() =>
+                            removeFromCart(
+                              item.productId,
+                              item.selectedMaterial,
+                              item.selectedSize,
+                              item.selectedLength
+                            )
+                          }
                         >
                           Eliminar
                         </Button>

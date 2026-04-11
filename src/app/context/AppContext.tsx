@@ -12,7 +12,12 @@ login: (email: string, password: string) => boolean;
 logout: () => void;
 register: (name: string, email: string, password: string, phone: string, address: string) => boolean;
 addToCart: (product: Product, material: string, size?: string, length?: number) => void;
-removeFromCart: (productId: string) => void;
+removeFromCart: (
+  productId: string,
+  material?: string,
+  size?: string,
+  length?: number
+) => void;
 updateCartQuantity: (productId: string, quantity: number) => void;
 clearCart: () => void;
 toggleCart: () => void;
@@ -136,16 +141,40 @@ toast.success("Producto añadido al carrito");
 
 };
 
-const removeFromCart = (productId: string) => {
-setCart(cart.filter(item => item.productId !== productId));
+const removeFromCart = (
+  productId: string,
+  material?: string,
+  size?: string,
+  length?: number
+) => {
+  setCart(
+    cart.filter(
+      item =>
+        !(
+          item.productId === productId &&
+          item.selectedMaterial === material &&
+          item.selectedSize === size &&
+          item.selectedLength === length
+        )
+    )
+  );
 };
 
-const updateCartQuantity = (productId: string, quantity: number) => {
+const updateCartQuantity = (
+  productId: string,
+  quantity: number,
+  material?: string,
+  size?: string,
+  length?: number
+) => {
 if (quantity <= 0) {
 removeFromCart(productId);
 } else {
 setCart(cart.map(item =>
-item.productId === productId
+item.productId === productId &&
+item.selectedMaterial === material &&
+item.selectedSize === size &&
+item.selectedLength === length
 ? { ...item, quantity }
 : item
 ));
