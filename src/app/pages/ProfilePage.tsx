@@ -233,7 +233,7 @@ export function ProfilePage() {
           <TabsContent value="address">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>Dirección de Envío</CardTitle>
+                <CardTitle>Dirección</CardTitle>
 
                 <Button
                 className="bg-[#5b4c9f] hover:bg-[#4a3d85]"

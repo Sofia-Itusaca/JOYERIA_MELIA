@@ -222,7 +222,17 @@ export function CatalogPage() {
                   return (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg overflow-hidden border w-full border-gray-200 hover:shadow-md transition-all duration-300 group"
+                      className="
+                      bg-white/70
+                      backdrop-blur-md
+                      rounded-2xl
+                      border border-white/30
+                      shadow-lg
+                      hover:shadow-xl
+                      transition-all
+                      duration-300
+                      group
+                      "
                     >
                       <button
                         onClick={() => navigate(`/producto/${product.id}`)}
@@ -492,7 +502,7 @@ export function CatalogPage() {
             );
             setShowCartOptions(false);
           }}
-          className="w-full mt-3 bg-[#5b4c9f] hover:bg-[#4a3d85] text-white py-2 rounded-lg"
+          className="w-full mt-3 bg-[#5b4c9f] hover:bg-[#4a3d85] text-white py-2 rounded-2x1"
         >
           Agregar al carrito
         </button>
