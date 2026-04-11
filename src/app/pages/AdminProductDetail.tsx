@@ -177,12 +177,39 @@ export function AdminProductDetail() {
                   </h3>
                   <div className="grid grid-cols-3 gap-4">
                     {material.images.map((image, index) => (
-                      <div key={index} className="aspect-square overflow-hidden rounded-lg bg-[#f5f5f7]">
+                      <div
+                        key={index}
+                        className="relative aspect-square overflow-hidden rounded-lg bg-[#f5f5f7]"
+                      >
                         <img
                           src={image}
-                          alt={`${productData.name} - ${material.type} ${index + 1}`}
+                          alt={`${productData.name}`}
                           className="w-full h-full object-cover"
                         />
+
+                        {isEditing && (
+                          <button
+                            onClick={() => {
+                              const updatedMaterials = productData.materials.map((m) => {
+                                if (m.type === material.type) {
+                                  return {
+                                    ...m,
+                                    images: m.images.filter((_, i) => i !== index)
+                                  };
+                                }
+                                return m;
+                              });
+
+                              setProductData({
+                                ...productData,
+                                materials: updatedMaterials
+                              });
+                            }}
+                            className="absolute top-2 right-2 bg-white rounded-full w-6 h-6 flex items-center justify-center shadow-md hover:bg-gray-200"
+                          >
+                            ✕
+                          </button>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -218,14 +245,42 @@ export function AdminProductDetail() {
                     }}
                   />
 
-                  <label htmlFor="uploadImages">
+                  <div className="mt-4">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      className="hidden"
+                      id="uploadImages"
+                      onChange={(e) => {
+                        const files = e.target.files;
+                        if (!files) return;
+
+                        const newImages = Array.from(files).map(file =>
+                          URL.createObjectURL(file)
+                        );
+
+                        const updatedMaterials = productData.materials.map((m, index) =>
+                          index === 0
+                            ? { ...m, images: [...m.images, ...newImages] }
+                            : m
+                        );
+
+                        setProductData({
+                          ...productData,
+                          materials: updatedMaterials
+                        });
+                      }}
+                    />
+
                     <Button
                       variant="outline"
-                      className="w-full cursor-pointer"
+                      className="w-full"
+                      onClick={() => document.getElementById('uploadImages')?.click()}
                     >
                       Cambiar imágenes
                     </Button>
-                  </label>
+                  </div>
                 </div>
               )}
             </div>
