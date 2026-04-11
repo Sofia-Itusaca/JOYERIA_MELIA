@@ -28,6 +28,10 @@ export function AdminCreateProduct() {
   const [newSize, setNewSize] = useState('');
   const [newLength, setNewLength] = useState('');
 
+  const [materialImages, setMaterialImages] = useState<{
+    [key: string]: string[];
+  }>({});
+
   useEffect(() => {
     if (!currentUser?.isAdmin) {
       navigate('/login');
@@ -75,6 +79,23 @@ export function AdminCreateProduct() {
 
   const removeSize = (size: string) => {
     setSizes(sizes.filter(s => s !== size));
+  };
+
+  const handleImageUpload = (
+    material: string,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    const newImages = Array.from(files).map(file =>
+      URL.createObjectURL(file)
+    );
+
+    setMaterialImages(prev => ({
+      ...prev,
+      [material]: [...(prev[material] || []), ...newImages]
+    }));
   };
 
   const addLength = () => {
@@ -365,15 +386,54 @@ export function AdminCreateProduct() {
                       <h3 className="font-semibold text-[#1a1f3a] mb-3 capitalize">
                         {materialOptions.find(m => m.value === material)?.label}
                       </h3>
-                      <div className="grid grid-cols-3 gap-2">
-                        {[1, 2, 3].map((i) => (
-                          <div
-                            key={i}
-                            className="aspect-square bg-white border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center hover:border-[#5b4c9f] transition-colors cursor-pointer"
-                          >
-                            <Plus className="w-8 h-8 text-gray-400" />
+                      <div className="space-y-3">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          id={`upload-${material}`}
+                          className="hidden"
+                          onChange={(e) => handleImageUpload(material, e)}
+                        />
+
+                        <div
+                          onClick={() =>
+                            document.getElementById(`upload-${material}`)?.click()
+                          }
+                          className="aspect-square bg-white border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center hover:border-[#5b4c9f] transition-colors cursor-pointer"
+                        >
+                          <Plus className="w-8 h-8 text-gray-400" />
+                        </div>
+
+                        {materialImages[material]?.length > 0 && (
+                          <div className="grid grid-cols-3 gap-2">
+                            {materialImages[material].map((img, index) => (
+                              <div key={index} className="relative">
+                                <img
+                                  src={img}
+                                  className="w-full h-24 object-cover rounded-lg"
+                                />
+
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    const updated = materialImages[material].filter(
+                                      (_, i) => i !== index
+                                    );
+
+                                    setMaterialImages({
+                                      ...materialImages,
+                                      [material]: updated
+                                    });
+                                  }}
+                                  className="absolute top-1 right-1 bg-white rounded-full w-6 h-6 shadow"
+                                >
+                                  ✕
+                                </button>
+                              </div>
+                            ))}
                           </div>
-                        ))}
+                        )}
                       </div>
                     </div>
                   ))}
