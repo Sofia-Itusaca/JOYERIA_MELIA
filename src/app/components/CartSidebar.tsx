@@ -167,7 +167,17 @@ export function CartSidebar() {
 
             <Button
               onClick={handleCheckout}
-              className="w-full bg-[#5b4c9f] hover:bg-[#4a3d85] text-white h-12"
+              className="
+                w-full
+                bg-gradient-to-r 
+                from-[#5b4c9f] 
+                to-[#8f7be8] 
+                text-white 
+                rounded-xl 
+                shadow-md 
+                hover:shadow-lg 
+                transition-all
+                "
             >
               Proceder al pago
             </Button>

@@ -233,7 +233,17 @@ selectedLength === length
 
 <Button
 onClick={handleAddToCart}
-className="w-full h-14 bg-[#5b4c9f] hover:bg-[#4a3d85]"
+className="
+w-full h-14
+bg-gradient-to-r 
+from-[#5b4c9f] 
+to-[#8f7be8] 
+text-white 
+rounded-xl 
+shadow-md 
+hover:shadow-lg 
+transition-all
+"
 >
 <ShoppingCart className="w-5 h-5 mr-2" />
 Añadir al carrito

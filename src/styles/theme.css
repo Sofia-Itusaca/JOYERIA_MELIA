@@ -134,10 +134,11 @@
   body {
   background: linear-gradient(
     135deg,
-    #f5f5f7 0%,
-    #e9e6ff 30%,
-    #d8d1ff 60%,
-    #f5f5f7 100%
+    #f6f5ff 0%,
+    #e8e5ff 25%,
+    #d9d2ff 50%,
+    #edeaff 75%,
+    #f6f5ff 100%
   );
 }
 

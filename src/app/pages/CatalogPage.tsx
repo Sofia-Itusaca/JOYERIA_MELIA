@@ -117,7 +117,7 @@ export function CatalogPage() {
           {/* Filters Sidebar */}
           <aside className="space-y-6 lg:block hidden">
             
-            <div className="bg-white rounded-lg p-6 shadow-sm">
+            <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h2 className="text-lg font-semibold text-[#1a1f3a] mb-4">Para Quién</h2>
               <div className="space-y-2">
                 {genderFilters.map((filter) => (
@@ -136,7 +136,7 @@ export function CatalogPage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg p-6 shadow-sm">
+            <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h2 className="text-lg font-semibold text-[#1a1f3a] mb-4">Material</h2>
               <div className="space-y-2">
                 {materialFilters.map((filter) => (
@@ -265,7 +265,16 @@ export function CatalogPage() {
                           <Button
                             size="sm"
                             onClick={() => handleAddToCart(product)}
-                            className="bg-[#5b4c9f] hover:bg-[#4a3d85] text-white px-2 py-1"
+                            className="
+                            bg-gradient-to-r 
+                            from-[#5b4c9f] 
+                            to-[#8f7be8] 
+                            text-white 
+                            rounded-xl 
+                            shadow-md 
+                            hover:shadow-lg 
+                            transition-all
+                            "
                           >
                             <ShoppingCart className="w-4 h-4" />
                           </Button>
