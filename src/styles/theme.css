@@ -132,7 +132,11 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+  font-family: "Inter", sans-serif;
+  }
+
+  h1, h2, h3, .title, .brand {
+    font-family: "Brilyan", serif;
   }
 
   /**
