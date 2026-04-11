@@ -242,9 +242,9 @@ export function CatalogPage() {
                           onClick={() => navigate(`/producto/${product.id}`)}
                           className="w-full text-left"
                         >
-                          <h3 className="text-xs font-medium text-[#1a1f3a] mb-1 group-hover:text-[#5b4c9f] transition-colors line-clamp-2">
-                            {product.name}
-                          </h3>
+                        <h3 className="text-base font-semibold text-[#1a1f3a] mb-1 group-hover:text-[#5b4c9f] transition-colors line-clamp-2">
+                          {product.name}
+                        </h3>
                         </button>
                         
                         <div className="flex items-center justify-between gap-1 mt-1">
