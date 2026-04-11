@@ -168,17 +168,19 @@ export function CatalogPage() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="
-                      pr-10 
-                      h-10 
-                      rounded-2xl 
-                      bg-white/60 
-                      backdrop-blur-md 
-                      border 
-                      border-white/40 
-                      shadow-lg
-                      "
+                    pr-10
+                    h-10
+                    rounded-2xl
+                    bg-[#f3f0ff]
+                    border
+                    border-gray-200
+                    shadow-sm
+                    focus:ring-2
+                    focus:ring-[#5b4c9f]/20
+                    focus:border-[#5b4c9f]
+                    "
                   />
-                  <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5b4c9f]" />
                 </div>
               </div>
               
