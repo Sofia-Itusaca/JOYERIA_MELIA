@@ -12,7 +12,7 @@ export function Root() {
       <ScrollToTop />
       <div className="min-h-screen bg-white flex flex-col w-full overflow-x-hidden">
         <Header />
-        <main className="mt-0 md:mt-6 flex-1 w-full overflow-x-hidden">
+        <main className="mt-0 md:mt-0 flex-1 w-full overflow-x-hidden">
           <Outlet />
         </main>
         <Footer />

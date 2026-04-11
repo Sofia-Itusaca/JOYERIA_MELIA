@@ -160,14 +160,23 @@ export function CatalogPage() {
           <div>
             {/* Mobile Filters */}
             <div className="lg:hidden mb-3 space-y-2">
-              <div className="bg-white rounded-2xl p-3 shadow-sm">
+              <div className="p-1">
                 <div className="relative">
                   <Input
                     type="text"
                     placeholder="Buscar productos..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pr-10 h-9 rounded-xl bg-[#f5f5f7] border-0 shadow-sm"
+                    className="
+                      pr-10 
+                      h-10 
+                      rounded-2xl 
+                      bg-white/60 
+                      backdrop-blur-md 
+                      border 
+                      border-white/40 
+                      shadow-lg
+                      "
                   />
                   <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 </div>
