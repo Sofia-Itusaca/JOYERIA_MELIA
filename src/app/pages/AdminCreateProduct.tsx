@@ -400,9 +400,9 @@ export function AdminCreateProduct() {
                           onClick={() =>
                             document.getElementById(`upload-${material}`)?.click()
                           }
-                          className="aspect-square bg-white border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center hover:border-[#5b4c9f] transition-colors cursor-pointer"
+                          className="w-28 h-28 bg-white border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center hover:border-[#5b4c9f] transition-colors cursor-pointer"
                         >
-                          <Plus className="w-8 h-8 text-gray-400" />
+                          <Plus className="w-6 h-6 text-gray-400" />
                         </div>
 
                         {materialImages[material]?.length > 0 && (
