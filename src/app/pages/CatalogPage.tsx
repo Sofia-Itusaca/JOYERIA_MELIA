@@ -1,14 +1,16 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { mockProducts } from '../data/mock-data';
+
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
+import { supabase } from '../../lib/supabase';
 import { ShoppingCart, Search } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { Product } from '../types';
 
+
 const categories = [
-  { value: 'all', label: 'Todos' },
+  { value: 'all', label: 'Tosdos' },
   { value: 'rings', label: 'Anillos' },
   { value: 'necklaces', label: 'Collares' },
   { value: 'bracelets', label: 'Pulseras' },
@@ -51,8 +53,25 @@ export function CatalogPage() {
   const [selectedCartMaterial, setSelectedCartMaterial] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedLength, setSelectedLength] = useState<number | undefined>(undefined);
-  
+  const [products, setProducts] = useState<Product[]>([]);
+
   useEffect(() => {
+  const fetchProducts = async () => {
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+
+    if (data) {
+      setProducts(data)
+    } else {
+      setProducts([])
+    }
+
+    console.log(data)
+  }
+
+  fetchProducts()
+
   const gender = searchParams.get('gender');
   const category = searchParams.get('category');
 
@@ -62,7 +81,7 @@ export function CatalogPage() {
 }, [searchParams]);
 
   const filteredProducts = useMemo(() => {
-    return mockProducts.filter(product => {
+    return products.filter(product => {
       if (!product.active) return false;
       
       if (selectedCategory !== 'all' && product.category !== selectedCategory) {
@@ -86,7 +105,7 @@ export function CatalogPage() {
       
       return true;
     });
-  }, [selectedCategory, selectedGender, selectedMaterial, searchQuery]);
+  }, [products, selectedCategory, selectedGender, selectedMaterial, searchQuery]);
 
   const handleAddToCart = (product: Product) => {
 
