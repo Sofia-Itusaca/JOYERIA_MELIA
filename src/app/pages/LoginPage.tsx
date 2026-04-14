@@ -38,9 +38,9 @@ export function LoginPage() {
     toast.success('¡Bienvenido de vuelta!');
 
     if (data.role === 'admin') {
-        navigate('/admin', { replace: true });
+        navigate('/admin');
       } else if (data.role === 'cliente') {
-        navigate('/', { replace: true });
+        navigate('/');
       }
   };
 
