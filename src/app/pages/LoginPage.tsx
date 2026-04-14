@@ -35,10 +35,10 @@ export function LoginPage() {
     toast.success('¡Bienvenido de vuelta!');
 
     if (data.role === 'admin') {
-      navigate('/admin', { replace: true });
-    } else {
-      navigate('/', { replace: true });
-    }
+        navigate('/admin', { replace: true });
+      } else if (data.role === 'cliente') {
+        navigate('/', { replace: true });
+      }
   };
 
   
