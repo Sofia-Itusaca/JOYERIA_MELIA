@@ -18,10 +18,13 @@ export function LoginPage() {
 
     const { data, error } = await supabase
       .from('users')
-      .select('*')
+      .select()
       .eq('email', email)
       .eq('password', password)
       .single();
+
+      console.log('DATA:', data)
+      console.log('ERROR:', error)
 
     if (error || !data) {
       toast.error('Email o contraseña incorrectos');
