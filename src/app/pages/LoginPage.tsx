@@ -5,35 +5,38 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { toast } from 'sonner';
+import { supabase } from '../../lib/supabase'
 
 export function LoginPage() {
   const navigate = useNavigate();
-  const { login } = useApp();
-  
+    
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const success = login(email, password);
-    
-    if (success) {
-      toast.success('¡Bienvenido de vuelta!');
-      navigate('/');
-    } else {
-      toast.error('Email o contraseña incorrectos');
-    }
-  };
 
-  const handleDemoLogin = (type: 'user' | 'admin') => {
-    if (type === 'user') {
-      login('maria@email.com', 'demo');
-    } else {
-      login('admin@joyasmelia.com', 'admin');
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .eq('password', password)
+      .single();
+
+    if (error || !data) {
+      toast.error('Email o contraseña incorrectos');
+      return;
     }
-    toast.success('¡Sesión iniciada!');
-    navigate(type === 'admin' ? '/admin' : '/');
+
+    localStorage.setItem('user', JSON.stringify(data));
+
+    toast.success('¡Bienvenido de vuelta!');
+
+    if (data.role === 'admin') {
+      navigate('/admin');
+    } else {
+      navigate('/');
+    }
   };
 
   return (
@@ -80,36 +83,6 @@ export function LoginPage() {
               Iniciar Sesión
             </Button>
           </form>
-
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-border" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Demo rápido</span>
-              </div>
-            </div>
-
-            <div className="mt-4 space-y-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => handleDemoLogin('user')}
-                className="w-full"
-              >
-                Usuario Demo
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => handleDemoLogin('admin')}
-                className="w-full"
-              >
-                Administrador Demo
-              </Button>
-            </div>
-          </div>
 
           <div className="mt-6 text-center text-sm">
             <span className="text-gray-600">¿No tienes cuenta? </span>
