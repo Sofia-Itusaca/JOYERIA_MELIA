@@ -6,10 +6,12 @@ import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { toast } from 'sonner';
 import { supabase } from '../../lib/supabase'
+const { updateUser } = useApp();
 
 export function LoginPage() {
   const navigate = useNavigate();
-    
+  const { updateUser } = useApp();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -31,6 +33,7 @@ export function LoginPage() {
     }
 
     localStorage.setItem('joyasMeliaUser', JSON.stringify(data));
+    updateUser(data);
 
     toast.success('¡Bienvenido de vuelta!');
 

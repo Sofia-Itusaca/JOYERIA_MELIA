@@ -3,6 +3,7 @@ import { User, CartItem, Product, StoreInfo } from '../types';
 import { mockUsers, mockStoreInfo } from '../data/mock-data';
 import { toast } from "sonner";
 
+
 interface AppContextType {
 currentUser: User | null;
 cart: CartItem[];
