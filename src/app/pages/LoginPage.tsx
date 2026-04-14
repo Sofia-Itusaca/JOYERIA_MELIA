@@ -18,30 +18,27 @@ export function LoginPage() {
 
     const { data, error } = await supabase
       .from('users')
-      .select()
+      .select('*')
       .eq('email', email)
       .eq('password', password)
       .single();
 
-      console.log('DATA:', data)
-      console.log('ERROR:', error)
+    console.log("ROL:", data?.role)
 
     if (error || !data) {
       toast.error('Email o contraseña incorrectos');
       return;
     }
 
-    localStorage.setItem('user', JSON.stringify(data));
+    localStorage.setItem('joyasMeliaUser', JSON.stringify(data));
 
     toast.success('¡Bienvenido de vuelta!');
 
     if (data.role === 'admin') {
-      window.location.href = "#/admin"
+      navigate('/admin', { replace: true });
     } else {
-      window.location.href = "#/"
+      navigate('/', { replace: true });
     }
-
-    console.log("ROL:", data.role)
   };
 
   
