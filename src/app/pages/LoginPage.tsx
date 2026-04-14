@@ -36,11 +36,15 @@ export function LoginPage() {
     toast.success('¡Bienvenido de vuelta!');
 
     if (data.role === 'admin') {
-      navigate('/admin');
+      navigate('#/admin');
     } else {
-      navigate('/');
+      navigate('#/');
     }
+
+    console.log("ROL:", data.role)
   };
+
+  
 
   return (
     <div className="min-h-[calc(100vh-120px)] bg-[#f5f5f7] flex items-start justify-center px-4 pt-6 pb-16">
