@@ -11,7 +11,10 @@ export function CartSidebar() {
   const [selectedMaterial, setSelectedMaterial] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedLength, setSelectedLength] = useState<number | undefined>(undefined);
-    useEffect(() => {
+    
+  const { cart, isCartOpen, closeCart, updateCartQuantity, removeFromCart, toggleCart, addToCart } = useApp();
+  
+  useEffect(() => {
     const handleOpenCart = () => {
       toggleCart();
     };
@@ -23,7 +26,7 @@ export function CartSidebar() {
     };
   }, []);
 
-  const { cart, isCartOpen, closeCart, updateCartQuantity, removeFromCart, toggleCart, addToCart } = useApp();
+  
   const navigate = useNavigate();
   const location = useLocation();
     useEffect(() => {

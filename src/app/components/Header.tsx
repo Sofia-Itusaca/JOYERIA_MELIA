@@ -23,11 +23,11 @@ export function Header() {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const isAdmin = useApp().currentUser?.isAdmin;
+  const isAdmin = currentUser?.role === "admin";
   const cartItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const handleLogoClick = () => {
-  if (currentUser?.isAdmin) {
+  if (currentUser?.role === "admin") {
     navigate("/admin");
     return;
   }
