@@ -85,7 +85,7 @@ name,
 email,
 phone,
 address,
-isAdmin: false
+role: "cliente"
 };
 setCurrentUser(newUser);
 return true;

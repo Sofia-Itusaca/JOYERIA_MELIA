@@ -5,7 +5,7 @@ import { useApp } from "../context/AppContext";
 export default function BottomNav() {
 const location = useLocation();
 const { cart, currentUser} = useApp();
-const isAdmin = currentUser?.isAdmin;
+const isAdmin = currentUser?.role === "admin";
 
 const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 

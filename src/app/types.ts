@@ -34,7 +34,7 @@ export interface User {
   email: string;
   phone: string;
   address: string;
-  isAdmin: boolean;
+  role?: "admin" | "cliente";
 }
 
 export interface CartItem {
