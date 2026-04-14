@@ -36,9 +36,9 @@ export function LoginPage() {
     toast.success('¡Bienvenido de vuelta!');
 
     if (data.role === 'admin') {
-      navigate('#/admin');
+      window.location.href = "#/admin"
     } else {
-      navigate('#/');
+      window.location.href = "#/"
     }
 
     console.log("ROL:", data.role)
