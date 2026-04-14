@@ -91,44 +91,64 @@ export function AdminOrders() {
         <h1 className="text-3xl font-bold text-[#1a1f3a] mb-8">Gestión de Pedidos</h1>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-4 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
-          <div className="bg-white rounded-lg p-3 md:p-6 shadow-sm">
-            <p className="text-sm text-gray-600 mb-1">Total Pedidos</p>
-            <p className="text-2xl md:text-3xl font-bold text-[#1a1f3a]">{totalOrders}</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+          <div className="bg-white rounded-lg p-3 md:p-5 shadow-sm text-center">
+            <p className="text-xs md:text-sm text-gray-600 leading-tight">
+              Total Pedidos
+            </p>
+            <p className="text-xl md:text-2xl font-bold text-[#1a1f3a] mt-1">
+              {totalOrders}
+            </p>
           </div>
-          <div className="bg-white rounded-lg p-3 md:p-6 shadow-sm">
-            <p className="text-sm text-gray-600 mb-1">Pendientes</p>
-            <p className="text-2xl md:text-3xl font-bold text-yellow-600">{pendingOrders}</p>
+          <div className="bg-white rounded-lg p-3 md:p-6 shadow-sm text-center">
+            <p className="text-xs md:text-sm text-gray-600 leading-tight">Pendientes</p>
+            <p className="text-xl md:text-2xl font-bold text-yellow-600 mt-1">{pendingOrders}</p>
           </div>
-          <div className="bg-white rounded-lg p-3 md:p-6 shadow-sm">
-            <p className="text-sm text-gray-600 mb-1">En Proceso</p>
-            <p className="text-2xl md:text-3xl font-bold text-blue-600">{processingOrders}</p>
+          <div className="bg-white rounded-lg p-3 md:p-6 shadow-sm text-center">
+            <p className="text-xs md:text-sm text-gray-600 leading-tight">En Proceso</p>
+            <p className="text-xl md:text-2xl font-bold text-blue-600 mt-1">{processingOrders}</p>
           </div>
-          <div className="bg-white rounded-lg p-3 md:p-6 shadow-sm">
-            <p className="text-sm text-gray-600 mb-1">Ingresos Totales</p>
-            <p className="text-2xl md:text-3xl font-bold text-[#5b4c9f]">
+          <div className="bg-white rounded-lg p-3 md:p-6 shadow-sm text-center">
+            <p className="text-xs md:text-sm text-gray-600 leading-tight">Ingresos Totales</p>
+            <p className="text-xl md:text-2xl font-bold text-[#5b4c9f] mt-1">
               ${totalRevenue.toLocaleString()}
             </p>
           </div>
         </div>
 
         {/* Filter */}
-        <div className="bg-white rounded-lg p-6 shadow-sm mb-6">
-          <div className="flex items-center gap-4">
-            <label className="font-medium text-[#1a1f3a]">Filtrar por estado:</label>
-            <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-              <SelectTrigger className="w-48">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Todos</SelectItem>
-                <SelectItem value="pending">Pendientes</SelectItem>
-                <SelectItem value="processing">En proceso</SelectItem>
-                <SelectItem value="shipped">Enviados</SelectItem>
-                <SelectItem value="delivered">Entregados</SelectItem>
-                <SelectItem value="cancelled">Cancelados</SelectItem>
-              </SelectContent>
-            </Select>
+        <div className="bg-white rounded-lg p-4 shadow-sm mb-6">
+          <div className="flex flex-col md:flex-row gap-3 items-center">
+
+            <div className="flex-1 relative w-full">
+              <input
+                type="text"
+                placeholder="Buscar por ID, cliente..."
+                className="w-full border rounded-lg px-3 py-2"
+              />
+            </div>
+
+            <div className="flex items-center gap-3">
+              <label className="font-medium text-[#1a1f3a] whitespace-nowrap">
+                Filtrar:
+              </label>
+
+              <Select value={selectedStatus} onValueChange={setSelectedStatus}>
+                <SelectTrigger className="w-40">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos</SelectItem>
+                  <SelectItem value="pending">Pendientes</SelectItem>
+                  <SelectItem value="processing">En proceso</SelectItem>
+                  <SelectItem value="shipped">Enviados</SelectItem>
+                  <SelectItem value="delivered">Entregados</SelectItem>
+                  <SelectItem value="cancelled">Cancelados</SelectItem>
+                </SelectContent>
+              </Select>
+
+            </div>
+
           </div>
         </div>
 
