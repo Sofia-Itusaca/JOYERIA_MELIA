@@ -25,10 +25,10 @@ export function AdminDashboard() {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   useEffect(() => {
-    if (!currentUser?.isAdmin) {
-      navigate('/login');
-    }
-  }, [currentUser, navigate]);
+  if (currentUser?.role !== "admin") {
+    navigate('/login');
+  }
+}, [currentUser, navigate]);
 
   const filteredProducts = useMemo(() => {
     return mockProducts.filter(product => {
@@ -39,16 +39,16 @@ export function AdminDashboard() {
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
         return product.name.toLowerCase().includes(query) || 
-               product.id.toLowerCase().includes(query);
+              product.id.toLowerCase().includes(query);
       }
       
       return true;
     });
   }, [searchQuery, selectedCategory]);
 
-  if (!currentUser?.isAdmin) {
-    return null;
-  }
+  if (currentUser?.role !== "admin") {
+  return null;
+}
 
   const totalProducts = mockProducts.length;
   const activeProducts = mockProducts.filter(p => p.active).length;
