@@ -38,10 +38,10 @@ export function LoginPage() {
     toast.success('¡Bienvenido de vuelta!');
 
     if (data.role === 'admin') {
-        navigate('/admin');
-      } else if (data.role === 'cliente') {
-        navigate('/');
-      }
+      window.location.href = "#/admin";
+    } else {
+      window.location.href = "#/";
+    }
   };
 
   
