@@ -16,7 +16,7 @@ export function AdminProductDetail() {
   const { currentUser } = useApp();
   
   const product = mockProducts.find(p => String(p.id) === id);  
-  const [productData, setProductData] = useState(product!);
+  const [productData, setProductData] = useState(product || null);
   
   const [isEditing, setIsEditing] = useState(false);
   const [showAddSize, setShowAddSize] = useState(false);
@@ -32,14 +32,14 @@ export function AdminProductDetail() {
   });
 
   useEffect(() => {
-    if (!currentUser?.isAdmin) {
-      navigate('/login');
-    }
+    if (currentUser?.role !== "admin") {
+  navigate('/login');
+  }
   }, [currentUser, navigate]);
 
-  if (!currentUser?.isAdmin) {
-    return null;
-  }
+  if (currentUser?.role !== "admin") {
+  return null;
+}
 
   if (!productData) {
       return (
@@ -120,58 +120,59 @@ export function AdminProductDetail() {
 
         <div className="space-y-3 mb-8">
 
-        <div className="flex items-center gap-4">
+        {/* FILA 1 */}
           <h1 className="text-3xl font-bold text-[#1a1f3a]">
             Detalle del Producto
           </h1>
 
-          <Badge className={formData.active 
-            ? 'bg-green-100 text-green-800' 
-            : 'bg-gray-100 text-gray-800'}>
-            {formData.active ? 'Activo' : 'Inactivo'}
-          </Badge>
-        </div>
+          {/* FILA 2 */}
+          <div className="flex items-center gap-3 flex-wrap">
 
-        <div className="flex gap-3 flex-wrap">
+              <Button
+                variant="outline"
+                onClick={handleToggleActive}
+                className={formData.active 
+                  ? 'text-red-600 hover:text-red-700' 
+                  : 'text-green-600 hover:text-green-700'}
+              >
+                {formData.active ? (
+                  <>
+                    <PowerOff className="w-4 h-4 mr-2" />
+                    Desactivar
+                  </>
+                ) : (
+                  <>
+                    <Power className="w-4 h-4 mr-2" />
+                    Activar
+                  </>
+                )}
+              </Button>
 
-          <Button
-            variant="outline"
-            onClick={handleToggleActive}
-            className={formData.active 
-              ? 'text-red-600 hover:text-red-700' 
-              : 'text-green-600 hover:text-green-700'}
-          >
-            {formData.active ? (
-              <>
-                <PowerOff className="w-4 h-4 mr-2" />
-                Desactivar
-              </>
-            ) : (
-              <>
-                <Power className="w-4 h-4 mr-2" />
-                Activar
-              </>
-            )}
-          </Button>
+              {isEditing ? (
+                <Button
+                  onClick={handleSave}
+                  className="bg-[#5b4c9f] hover:bg-[#4a3d85]"
+                >
+                  <Save className="w-4 h-4 mr-2" />
+                  Guardar Cambios
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => setIsEditing(true)}
+                  className="bg-[#5b4c9f] hover:bg-[#4a3d85]"
+                >
+                  Editar Producto
+                </Button>
+              )}
 
-          {isEditing ? (
-            <Button
-              onClick={handleSave}
-              className="bg-[#5b4c9f] hover:bg-[#4a3d85]"
-            >
-              <Save className="w-4 h-4 mr-2" />
-              Guardar Cambios
-            </Button>
-          ) : (
-            <Button
-              onClick={() => setIsEditing(true)}
-              className="bg-[#5b4c9f] hover:bg-[#4a3d85]"
-            >
-              Editar Producto
-            </Button>
-          )}
+              {/* 👇 AQUÍ VA EL BADGE */}
+              <Badge className={formData.active 
+                ? 'bg-green-100 text-green-800' 
+                : 'bg-gray-100 text-gray-800'}>
+                {formData.active ? 'Activo' : 'Inactivo'}
+              </Badge>
 
-        </div>
+            </div>
 
       </div>
 
