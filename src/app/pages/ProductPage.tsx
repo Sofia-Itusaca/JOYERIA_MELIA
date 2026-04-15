@@ -1,19 +1,38 @@
 import { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { mockProducts } from '../data/mock-data';
+import { supabase } from '../../lib/supabase';
 import { Button } from '../components/ui/button';
 import { ShoppingCart, ArrowLeft, Star } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { Badge } from '../components/ui/badge';
+import { Product } from '../types';
 
 export function ProductPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart, currentUser, exchangeRate } = useApp();
   
-  const product = mockProducts.find(p => String(p.id) === id);  
+  const [product, setProduct] = useState<Product | null>(null);
+
+    useEffect(() => {
+      const fetchProduct = async () => {
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .eq('id', id)
+          .single();
+
+        if (data) {
+          setProduct(data);
+        } else {
+          setProduct(null);
+        }
+      };
+
+      fetchProduct();
+    }, [id]);
   
-  const [selectedMaterial, setSelectedMaterial] = useState(product?.materials[0].type || '');
+  const [selectedMaterial, setSelectedMaterial] = useState('');
   const [selectedSize, setSelectedSize] = useState(product?.sizes?.[0] || '');
   const [selectedLength, setSelectedLength] = useState(product?.lengths?.[0] || 0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -28,18 +47,15 @@ export function ProductPage() {
   const touchStart = useRef(0);
   const touchEnd = useRef(0);
 
+  
   if (!product) {
-    return (
-      <div className="min-h-screen bg-[#f5f5f7] flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-[#1a1f3a] mb-4">Producto no encontrado</h2>
-          <Button onClick={() => navigate('/catalogo')}>
-            Volver al catálogo
-          </Button>
-        </div>
-      </div>
-    );
-  }
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <p>Cargando producto...</p>
+    </div>
+  );
+}
+  
 
   const currentMaterial = product.materials.find(m => m.type === selectedMaterial);
   const images = currentMaterial?.images || [];

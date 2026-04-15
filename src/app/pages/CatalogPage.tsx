@@ -252,7 +252,11 @@ export function CatalogPage() {
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-3 w-full">
                 {filteredProducts.map((product) => {
-                  const mainImage = product.materials[0].images[0];
+                  const mainImage =
+                  product.materials?.[0]?.images?.[0] ||
+                  "https://via.placeholder.com/300x300?text=Sin+imagen";
+                  const priceUSD = (product.price / exchangeRate).toFixed(2);
+                  const pricePEN = product.price.toFixed(2);
                   
                   return (
                     <div
@@ -296,12 +300,12 @@ export function CatalogPage() {
                           <div className="flex flex-col">
                             {/* USD pequeño */}
                             <p className="text-xs text-[#5b4c9f] leading-none">
-                              $ {(product.price / exchangeRate).toFixed(2)}
+                              $ {priceUSD}
                             </p>
 
                             {/* SOLES grande */}
                             <p className="text-sm font-bold text-green-600 leading-none">
-                              S/ {product.price.toFixed(2)}
+                              S/ {pricePEN}
                             </p>
                           </div>
                           

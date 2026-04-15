@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { Button } from '../components/ui/button';
@@ -10,12 +10,22 @@ import { Eye, EyeOff } from "lucide-react";
 
 export function LoginPage() {
   const navigate = useNavigate();
-  const { updateUser } = useApp();
+  const { updateUser, currentUser } = useApp();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (!currentUser) return;
+
+    if (currentUser.role === "admin") {
+      navigate('/admin');
+    } else {
+      navigate('/');
+    }
+  }, [currentUser]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,16 +50,7 @@ export function LoginPage() {
 
     toast.success('¡Bienvenido de vuelta!');
 
-    if (data.role === 'admin') {
-      navigate('/admin', { replace: true });
-    } else {
-      navigate('/', { replace: true });
-    }
-    
-  };
-
-  
-
+};
   return (
     <div className="min-h-[calc(100vh-120px)] bg-[#f5f5f7] flex items-start justify-center px-4 pt-6 pb-16">
       <div className="w-full max-w-md">
