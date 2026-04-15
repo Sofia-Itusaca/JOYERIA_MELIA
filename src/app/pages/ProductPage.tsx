@@ -9,7 +9,7 @@ import { Badge } from '../components/ui/badge';
 export function ProductPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart, currentUser } = useApp();
+  const { addToCart, currentUser, exchangeRate } = useApp();
   
   const product = mockProducts.find(p => String(p.id) === id);  
   
@@ -144,9 +144,19 @@ className="w-full h-full object-cover"
 {product.name}
 </h1>
 
-<p className="text-4xl font-bold text-[#5b4c9f] mb-4">
-${product.price.toLocaleString()}
-</p>
+<div className="mb-4 flex flex-col">
+  
+  {/* USD pequeño */}
+  <p className="text-sm text-[#5b4c9f] font-medium">
+    $ {(product.price / exchangeRate).toFixed(2)}
+  </p>
+
+  {/* SOLES grande */}
+  <p className="text-3xl font-bold text-green-600">
+    S/ {product.price.toFixed(2)}
+  </p>
+
+</div>
 
 <p className="text-gray-600 leading-relaxed">
 {product.description}

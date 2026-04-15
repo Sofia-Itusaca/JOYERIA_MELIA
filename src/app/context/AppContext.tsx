@@ -2,7 +2,8 @@ import { createContext, useContext, useState, ReactNode, useEffect } from 'react
 import { User, CartItem, Product, StoreInfo } from '../types';
 import { mockUsers, mockStoreInfo } from '../data/mock-data';
 import { toast } from "sonner";
-
+import { getDollarRateToday } from "../../lib/exchange";
+import { supabase } from "../../lib/supabase";
 
 interface AppContextType {
 currentUser: User | null;
@@ -24,12 +25,25 @@ clearCart: () => void;
 toggleCart: () => void;
 closeCart: () => void;
 updateStoreInfo: (info: StoreInfo) => void;
-updateUser: (user: User) => void;
+updateUser: (user: User) => Promise<void>;
+exchangeRate: number;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
+  const [exchangeRate, setExchangeRate] = useState(3.8);
+
+  useEffect(() => {
+  getDollarRateToday()
+    .then(rate => setExchangeRate(rate))
+    .catch(() => {
+      console.error("Error obteniendo dólar");
+      setExchangeRate(3.8); // fallback
+    });
+}, []);
+
+
 const [currentUser, setCurrentUser] = useState<User | null>(null);
 const [cart, setCart] = useState<CartItem[]>([]);
 const [isCartOpen, setIsCartOpen] = useState(false);
@@ -198,9 +212,25 @@ const updateStoreInfo = (info: StoreInfo) => {
 setStoreInfo(info);
 };
 
-const updateUser = (user: User) => {
-setCurrentUser(user);
-};
+  const updateUser = async (user: User) => {
+    const { error } = await supabase
+      .from('users')
+      .update({
+        name: user.name,
+        phone: user.phone,
+        address: user.address,
+      })
+      .eq('id', user.id);
+
+    if (error) {
+      console.error(error);
+      toast.error("Error actualizando usuario");
+      return;
+    }
+
+    setCurrentUser(user);
+    toast.success("Perfil actualizado");
+  };
 
 return (
 <AppContext.Provider value={{
@@ -218,7 +248,8 @@ clearCart,
 toggleCart,
 closeCart,
 updateStoreInfo,
-updateUser
+updateUser,
+exchangeRate
 }}>
 {children}
 </AppContext.Provider>
@@ -232,3 +263,4 @@ throw new Error('useApp must be used within AppProvider');
 }
 return context;
 }
+

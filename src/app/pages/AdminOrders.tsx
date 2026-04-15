@@ -20,12 +20,12 @@ export function AdminOrders() {
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
 
   useEffect(() => {
-    if (!currentUser?.isAdmin) {
+    if (currentUser?.role !== "admin") {
       navigate('/login');
     }
   }, [currentUser, navigate]);
 
-  if (!currentUser?.isAdmin) {
+  if (currentUser?.role !== "admin") {
     return null;
   }
 

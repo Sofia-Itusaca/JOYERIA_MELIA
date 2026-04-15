@@ -12,19 +12,19 @@ export function CartSidebar() {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedLength, setSelectedLength] = useState<number | undefined>(undefined);
     
-  const { cart, isCartOpen, closeCart, updateCartQuantity, removeFromCart, toggleCart, addToCart } = useApp();
+  const { cart, isCartOpen, closeCart, updateCartQuantity, removeFromCart, toggleCart, addToCart, exchangeRate } = useApp();
   
   useEffect(() => {
-    const handleOpenCart = () => {
-      toggleCart();
-    };
+  const handleOpenCart = () => {
+    toggleCart();
+  };
 
-    window.addEventListener("openCart", handleOpenCart);
+  window.addEventListener("openCart", handleOpenCart);
 
-    return () => {
-      window.removeEventListener("openCart", handleOpenCart);
-    };
-  }, []);
+  return () => {
+    window.removeEventListener("openCart", handleOpenCart);
+  };
+}, [toggleCart]);
 
   
   const navigate = useNavigate();
@@ -107,9 +107,17 @@ export function CartSidebar() {
                         {item.selectedSize && ` • Talla ${item.selectedSize}`}
                         {item.selectedLength && ` • ${item.selectedLength}cm`}
                       </p>
-                      <p className="text-sm font-semibold text-[#5b4c9f] mt-1">
-                        ${item.product.price.toLocaleString()}
-                      </p>
+                      <div className="mt-1 flex flex-col">
+                        {/* USD */}
+                        <p className="text-xs text-[#5b4c9f] leading-none">
+                          $ {(item.product.price / exchangeRate).toFixed(2)}
+                        </p>
+
+                        {/* SOLES */}
+                        <p className="text-sm font-bold text-green-600 leading-none">
+                          S/ {item.product.price.toFixed(2)}
+                        </p>
+                      </div>
 
                       <div className="flex items-center gap-2 mt-2">
                         <Button
@@ -163,9 +171,18 @@ export function CartSidebar() {
           <div className="border-t border-border p-6 space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-lg font-semibold text-[#1a1f3a]">Total</span>
-              <span className="text-2xl font-bold text-[#5b4c9f]">
-                ${total.toLocaleString()}
-              </span>
+              <div className="flex flex-col items-end">
+                {/* USD */}
+                <span className="text-sm text-[#5b4c9f]">
+                  $ {(total / exchangeRate).toFixed(2)}
+                </span>
+
+                {/* SOLES */}
+                <span className="text-xl font-bold text-green-600">
+                  S/ {total.toFixed(2)}
+                </span>
+
+              </div>
             </div>
 
             <Button

@@ -100,7 +100,7 @@ export function ProfilePage() {
               Información
             </TabsTrigger>
 
-            {!currentUser?.isAdmin && (
+            {currentUser?.role !== "admin" && (
               <>
                 <TabsTrigger value="orders">
                   <Package className="w-4 h-4 mr-2" />
@@ -144,13 +144,13 @@ export function ProfilePage() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-600 mb-1">Tipo de cuenta</p>
-                    <Badge className={currentUser.isAdmin ? 'bg-[#5b4c9f]' : 'bg-gray-500'}>
-                      {currentUser.isAdmin ? 'Administrador' : 'Cliente'}
-                    </Badge>
+                    <Badge className={currentUser.role === "admin" ? 'bg-[#5b4c9f]' : 'bg-gray-500'}>
+                        {currentUser.role === "admin" ? 'Administrador' : 'Cliente'}
+                      </Badge>
                   </div>
                 </div>
 
-                {currentUser.isAdmin && (
+                {currentUser.role === "admin" && (
                   <div className="mt-6 pt-6 border-t border-border">
                     <Button
                       onClick={() => navigate('/admin')}

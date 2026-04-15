@@ -10,7 +10,7 @@ import { Product } from '../types';
 
 
 const categories = [
-  { value: 'all', label: 'Tosdos' },
+  { value: 'all', label: 'Todos' },
   { value: 'rings', label: 'Anillos' },
   { value: 'necklaces', label: 'Collares' },
   { value: 'bracelets', label: 'Pulseras' },
@@ -39,7 +39,7 @@ const materialFilters = [
 export function CatalogPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { addToCart } = useApp();
+  const { addToCart, exchangeRate } = useApp();
   
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'all');
   const [selectedGender, setSelectedGender] = useState(searchParams.get('gender') || 'all');
@@ -292,10 +292,18 @@ export function CatalogPage() {
                         </h3>
                         </button>
                         
-                        <div className="flex items-center justify-between gap-1 mt-1">
-                          <p className="text-sm font-semibold text-[#5b4c9f]">
-                            ${product.price.toLocaleString()}
-                          </p>
+                        <div className="flex items-center justify-between gap-2 mt-1">
+                          <div className="flex flex-col">
+                            {/* USD pequeño */}
+                            <p className="text-xs text-[#5b4c9f] leading-none">
+                              $ {(product.price / exchangeRate).toFixed(2)}
+                            </p>
+
+                            {/* SOLES grande */}
+                            <p className="text-sm font-bold text-green-600 leading-none">
+                              S/ {product.price.toFixed(2)}
+                            </p>
+                          </div>
                           
                           <Button
                             size="sm"
