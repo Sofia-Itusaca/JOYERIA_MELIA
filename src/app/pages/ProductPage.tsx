@@ -7,6 +7,10 @@ import { useApp } from '../context/AppContext';
 import { Badge } from '../components/ui/badge';
 import { Product } from '../types';
 
+type ProductWithLegacyFields = Product & {
+  material?: string | null;
+};
+
 export function ProductPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -23,7 +27,20 @@ export function ProductPage() {
           .single();
 
         if (data) {
-          setProduct(data);
+          const legacyMaterial = (data as ProductWithLegacyFields).material;
+          const normalizedProduct = {
+            ...data,
+            materials: Array.isArray(data.materials) && data.materials.length > 0
+              ? data.materials
+              : [{
+                  type: legacyMaterial || 'gold',
+                  images: data.image ? [data.image] : []
+                }],
+            sizes: Array.isArray(data.sizes) ? data.sizes : undefined,
+            lengths: Array.isArray(data.lengths) ? data.lengths : undefined
+          };
+
+          setProduct(normalizedProduct);
         } else {
           setProduct(null);
         }
@@ -57,7 +74,7 @@ export function ProductPage() {
 }
   
 
-  const currentMaterial = product.materials.find(m => m.type === selectedMaterial);
+  const currentMaterial = product.materials.find(m => m.type === selectedMaterial) || product.materials[0];
   const images = currentMaterial?.images || [];
 
   const handleAddToCart = () => {
@@ -113,14 +130,14 @@ currentImageIndex === 0
 >
 
 <img
-src={images[currentImageIndex] || images[0]}
+src={images[currentImageIndex] || product.image || ''}
 alt={product.name}
 className="w-full object-contain"
 />
 
 {/* contador */}
 <div className="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded-full">
-{currentImageIndex + 1}/{images.length}
+{images.length > 0 ? currentImageIndex + 1 : 0}/{images.length}
 </div>
 
 </div>

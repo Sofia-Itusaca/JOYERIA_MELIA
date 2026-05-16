@@ -58,10 +58,16 @@ export function AdminCreateProduct() {
 
   console.log(materialImages);
 
+  const productMaterials = materials.map((material) => ({
+    type: material,
+    images: materialImages[material] || []
+  }));
+
   const productData = {
     name: formData.name,
     description: formData.description,
     price: formData.price,
+    stock: formData.stock,
 
     category: formData.category,
 
@@ -71,8 +77,11 @@ export function AdminCreateProduct() {
   Object.values(materialImages)[0]?.[0] || null,
 
     material: materials[0],
+    materials: productMaterials,
 
     size: sizes[0] || null,
+    sizes: sizes.length > 0 ? sizes : null,
+    lengths: lengths.length > 0 ? lengths : null,
 
     active: true
   };

@@ -8,6 +8,25 @@ import { ShoppingCart, Search } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { Product } from '../types';
 
+type ProductWithLegacyFields = Product & {
+  material?: string | null;
+};
+
+const normalizeProduct = (product: ProductWithLegacyFields): Product => {
+  const materials = Array.isArray(product.materials) && product.materials.length > 0
+    ? product.materials
+    : [{
+        type: product.material || 'gold',
+        images: product.image ? [product.image] : []
+      }];
+
+  return {
+    ...product,
+    materials,
+    sizes: Array.isArray(product.sizes) ? product.sizes : undefined,
+    lengths: Array.isArray(product.lengths) ? product.lengths : undefined
+  };
+};
 
 const categories = [
   { value: 'all', label: 'Todos' },
@@ -62,7 +81,7 @@ export function CatalogPage() {
       .select('*')
 
     if (data) {
-      setProducts(data)
+      setProducts(data.map(normalizeProduct))
     } else {
       setProducts([])
     }
@@ -290,22 +309,22 @@ export function CatalogPage() {
                       <div className="p-2">
                         <button
                           onClick={() => navigate(`/producto/${product.id}`)}
-                          className="w-full text-left"
+                          className="block w-full text-left"
                         >
-                        <h3 className="text-lg font-semibold text-[#1a1f3a] mb-1 group-hover:text-[#5b4c9f] transition-colors line-clamp-2">
+                        <h3 className="text-lg leading-none font-semibold text-[#1a1f3a] mb-0 group-hover:text-[#5b4c9f] transition-colors line-clamp-1">
                           {product.name}
                         </h3>
                         </button>
                         
-                        <div className="flex items-center justify-between gap-2 mt-1">
-                          <div className="flex flex-col">
+                        <div className="flex items-start justify-between gap-3 mt-2">
+                          <div className="flex flex-col gap-2 leading-none">
                             {/* USD pequeño */}
-                            <p className="text-xs text-[#5b4c9f] leading-none">
+                            <p className="text-xs text-[#5b4c9f] leading-none m-0">
                               $ {priceUSD}
                             </p>
 
                             {/* SOLES grande */}
-                            <p className="text-sm font-bold text-green-600 leading-none">
+                            <p className="text-lg font-bold text-green-600 leading-none m-0">
                               S/ {pricePEN}
                             </p>
                           </div>
@@ -327,10 +346,6 @@ export function CatalogPage() {
                             <ShoppingCart className="w-4 h-4" />
                           </Button>
                         </div>
-
-                        <p className="text-[10px] text-gray-400 mt-1">
-                          Vendido {product.soldCount} veces
-                        </p>
                       </div>
                     </div>
                   );
