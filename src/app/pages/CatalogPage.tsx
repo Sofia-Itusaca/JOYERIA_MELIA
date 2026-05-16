@@ -256,7 +256,6 @@ export function CatalogPage() {
                     product.image ||
                     product.materials?.[0]?.images?.[0] ||
                     "";
-                                    
                   const priceUSD = (product.price / exchangeRate).toFixed(2);
                   const pricePEN = product.price.toFixed(2);
                   
