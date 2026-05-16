@@ -5,6 +5,7 @@ export interface Product {
   name: string;
   description: string;
   price: number;
+  image?: string;
   category: 'rings' | 'necklaces' | 'bracelets' | 'earrings' | 'watches' | 'for-him' | 'babys';
   materials: Array<{
   type: string;

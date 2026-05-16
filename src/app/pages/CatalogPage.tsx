@@ -82,7 +82,7 @@ export function CatalogPage() {
 
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
-      if (!product.active) return false;
+      if (product.active === false) return false;
       
       if (selectedCategory !== 'all' && product.category !== selectedCategory) {
         return false;
@@ -253,8 +253,10 @@ export function CatalogPage() {
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-3 w-full">
                 {filteredProducts.map((product) => {
                   const mainImage =
-                  product.materials?.[0]?.images?.[0] ||
-                  "https://via.placeholder.com/300x300?text=Sin+imagen";
+                    product.image ||
+                    product.materials?.[0]?.images?.[0] ||
+                    "";
+                                    
                   const priceUSD = (product.price / exchangeRate).toFixed(2);
                   const pricePEN = product.price.toFixed(2);
                   

@@ -8,6 +8,7 @@ import { Textarea } from '../components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { ArrowLeft, Plus, X } from 'lucide-react';
 import { toast } from 'sonner';
+import { supabase } from '../../lib/supabase';
 
 export function AdminCreateProduct() {
   const { currentUser } = useApp();
@@ -42,23 +43,54 @@ export function AdminCreateProduct() {
     return null;
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.name || !formData.description || formData.price <= 0) {
-      toast.error('Por favor completa todos los campos requeridos');
-      return;
-    }
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    if (materials.length === 0) {
-      toast.error('Selecciona al menos un material');
-      return;
-    }
+  if (!formData.name || !formData.description || formData.price <= 0) {
+    toast.error('Por favor completa todos los campos requeridos');
+    return;
+  }
 
-    // Simulate product creation
-    toast.success('Producto creado exitosamente');
-    navigate('/admin');
+  if (materials.length === 0) {
+    toast.error('Selecciona al menos un material');
+    return;
+  }
+
+  console.log(materialImages);
+
+  const productData = {
+    name: formData.name,
+    description: formData.description,
+    price: formData.price,
+
+    category: formData.category,
+
+    targetGender: formData.targetGender,
+
+    image:
+  Object.values(materialImages)[0]?.[0] || null,
+
+    material: materials[0],
+
+    size: sizes[0] || null,
+
+    active: true
   };
+
+  const { error } = await supabase
+    .from('products')
+    .insert([productData]);
+
+  if (error) {
+    console.log(error);
+    toast.error('Error al crear producto');
+    return;
+  }
+
+  toast.success('Producto creado exitosamente');
+
+  navigate('/admin');
+};
 
   const addMaterial = (material: string) => {
     if (!materials.includes(material)) {
@@ -81,22 +113,44 @@ export function AdminCreateProduct() {
     setSizes(sizes.filter(s => s !== size));
   };
 
-  const handleImageUpload = (
-    material: string,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const files = e.target.files;
-    if (!files) return;
+const handleImageUpload = async (
+  material: string,
+  e: React.ChangeEvent<HTMLInputElement>
+) => {
+  const files = e.target.files;
 
-    const newImages = Array.from(files).map(file =>
-      URL.createObjectURL(file)
-    );
+  if (!files) return;
 
-    setMaterialImages(prev => ({
-      ...prev,
-      [material]: [...(prev[material] || []), ...newImages]
-    }));
+  const uploadedUrls: string[] = [];
+
+  for (const file of Array.from(files)) {
+    const fileName = `${Date.now()}-${file.name}`;
+
+    const { error } = await supabase.storage
+      .from('products')
+      .upload(fileName, file);
+
+    if (error) {
+      console.log(error);
+      continue;
+    }
+
+    const { data } = supabase.storage
+      .from('products')
+      .getPublicUrl(fileName);
+
+    uploadedUrls.push(data.publicUrl);
+  }
+
+  const updatedImages = {
+    ...materialImages,
+    [material]: uploadedUrls
   };
+
+  setMaterialImages(updatedImages);
+
+  console.log(updatedImages);
+};
 
   const addLength = () => {
     const length = parseInt(newLength);
